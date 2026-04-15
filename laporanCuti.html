@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRIS Dashboard - Laporan Cuti</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    </style>
+</head>
+<body class="bg-gray-50 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-white border-r border-gray-100 flex flex-col justify-between hidden md:flex h-full shrink-0">
+        <div class="p-6 overflow-y-auto custom-scrollbar">
+            <div class="flex items-center gap-2 mb-8 font-bold text-xl text-gray-800">
+                <div class="w-6 h-6 bg-emerald-500 rounded text-white flex items-center justify-center">H</div>
+                Portal HRIS
+            </div>
+            
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                
+                <a href="karyawan.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <span class="font-medium">Karyawan</span>
+                </a>
+
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>Kehadiran & Absensi</span>
+                </a>
+
+                <div>
+                    <button class="flex items-center justify-between w-full text-emerald-600 px-4 py-3 rounded-xl transition">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="font-medium">Manajemen Cuti</span>
+                        </div>
+                        <svg class="w-4 h-4 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    
+                    <div class="ml-10 mt-1 space-y-1 text-sm">
+                        <a href="manajemenCuti.html" class="block px-4 py-2 text-gray-500 hover:text-gray-800 rounded-lg">Pengajuan Cuti</a>
+                        <a href="pengaturanJenisDanKuotaCuti.html" class="block px-4 py-2 text-gray-500 hover:text-gray-800 rounded-lg">Jenis & Kuota Cuti</a>
+                        <a href="laporanCuti.html" class="block px-4 py-2 bg-gray-50 text-gray-800 font-medium rounded-lg">Laporan Cuti</a>
+                    </div>
+
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>Penggajian & BPJS</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>KPI & Penilaian</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>Pengumuman HR</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>Pelaporan (Report)</span>
+                </a>
+
+                </div>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-hidden bg-gray-50/50">
+        
+        <header class="h-[72px] bg-white flex items-center justify-between px-8 shrink-0 border-b border-gray-100">
+            <div class="relative w-96"> </div>
+            
+            <div class="flex items-center gap-8 text-sm font-medium text-gray-600">
+                <a href="#" class="hover:text-gray-900">Kebijakan HR</a>
+                <a href="#" class="hover:text-gray-900">Log Aktifitas</a>
+                
+                <div class="flex items-center gap-4 ml-4 border-l pl-6">
+                    <button class="relative text-gray-400 hover:text-gray-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <button class="relative text-gray-400 hover:text-gray-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <div class="flex items-center gap-2 cursor-pointer">
+                        <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
+                            <img src="https://i.pravatar.cc/150?img=47" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Total Hari Cuti Terpakai</p>
+                        <p class="text-2xl font-bold text-gray-800">142 <span class="text-sm font-normal text-gray-400">Bulan Ini</span></p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Karyawan Sedang Cuti</p>
+                        <p class="text-2xl font-bold text-gray-800">12 <span class="text-sm font-normal text-gray-400">Orang Hari Ini</span></p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-500 font-medium">Cuti Sakit Tertinggi</p>
+                        <p class="text-2xl font-bold text-gray-800">IT Dept <span class="text-sm font-normal text-gray-400">Bulan Ini</span></p>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-center">
+                    <p class="text-sm text-gray-500 font-medium mb-1">Rata-rata Sisa Kuota Karyawan</p>
+                    <div class="flex items-center gap-3">
+                        <div class="flex-1 bg-gray-100 rounded-full h-2.5">
+                            <div class="bg-emerald-500 h-2.5 rounded-full" style="width: 65%"></div>
+                        </div>
+                        <span class="text-sm font-bold text-gray-700">65%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                
+                <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm flex flex-col">
+                    <h2 class="text-base font-bold text-gray-800 mb-4">Filter Laporan</h2>
+                    <div class="space-y-4 flex-1">
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Periode</label>
+                            <input type="month" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Departemen</label>
+                            <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <option>Semua Departemen</option>
+                                <option>IT & Engineering</option>
+                                <option>Marketing</option>
+                                <option>Finance</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-gray-500 mb-1">Jenis Cuti</label>
+                            <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                <option>Semua Jenis</option>
+                                <option>Tahunan</option>
+                                <option>Sakit</option>
+                                <option>Penting/Mendadak</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex gap-2">
+                        <button class="flex-1 bg-emerald-600 text-white rounded-lg py-2 text-sm font-medium hover:bg-emerald-700 transition">Terapkan</button>
+                        <button class="flex-1 bg-[#111827] text-white rounded-lg py-2 text-sm font-medium hover:bg-black transition flex justify-center items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            PDF
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm lg:col-span-2">
+                    <h2 class="text-base font-bold text-gray-800 mb-4">Tren Pengambilan Cuti (Tahun Ini)</h2>
+                    <div class="h-64 w-full">
+                        <canvas id="leaveTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-base font-bold text-gray-800">Detail Histori Cuti Karyawan</h2>
+                    <div class="relative w-64">
+                        <svg class="w-4 h-4 absolute left-3 top-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <input type="text" placeholder="Cari Nama Karyawan..." class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-9 pr-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600 whitespace-nowrap">
+                        <thead class="text-xs text-gray-400 font-medium border-b border-gray-100 bg-gray-50/50">
+                            <tr>
+                                <th class="py-3 px-4">Nama Karyawan</th>
+                                <th class="py-3 px-4">Departemen</th>
+                                <th class="py-3 px-4">Periode Terakhir</th>
+                                <th class="py-3 px-4">Jenis Cuti</th>
+                                <th class="py-3 px-4">Total Diambil</th>
+                                <th class="py-3 px-4">Sisa Kuota</th>
+                                <th class="py-3 px-4 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-4 px-4 font-medium text-gray-800">Pristia Candra</td>
+                                <td class="py-4 px-4">Marketing</td>
+                                <td class="py-4 px-4">01 Apr - 03 Apr 2026</td>
+                                <td class="py-4 px-4"><span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs font-medium">Sakit</span></td>
+                                <td class="py-4 px-4">3 Hari</td>
+                                <td class="py-4 px-4"><span class="font-bold text-emerald-600">9 Hari</span></td>
+                                <td class="py-4 px-4 text-center">
+                                    <button class="text-emerald-600 hover:text-emerald-800 font-medium text-xs underline">Lihat Detail</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-4 px-4 font-medium text-gray-800">Hanna Baptista</td>
+                                <td class="py-4 px-4">IT & Engineering</td>
+                                <td class="py-4 px-4">15 Mar - 17 Mar 2026</td>
+                                <td class="py-4 px-4"><span class="px-2 py-1 bg-yellow-50 text-yellow-600 rounded text-xs font-medium">Tahunan</span></td>
+                                <td class="py-4 px-4">5 Hari</td>
+                                <td class="py-4 px-4"><span class="font-bold text-emerald-600">7 Hari</span></td>
+                                <td class="py-4 px-4 text-center">
+                                    <button class="text-emerald-600 hover:text-emerald-800 font-medium text-xs underline">Lihat Detail</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-4 px-4 font-medium text-gray-800">Miracle Geidt</td>
+                                <td class="py-4 px-4">Finance</td>
+                                <td class="py-4 px-4">10 Feb - 11 Feb 2026</td>
+                                <td class="py-4 px-4"><span class="px-2 py-1 bg-purple-50 text-purple-600 rounded text-xs font-medium">Acara Keluarga</span></td>
+                                <td class="py-4 px-4">2 Hari</td>
+                                <td class="py-4 px-4"><span class="font-bold text-emerald-600">10 Hari</span></td>
+                                <td class="py-4 px-4 text-center">
+                                    <button class="text-emerald-600 hover:text-emerald-800 font-medium text-xs underline">Lihat Detail</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const ctx = document.getElementById('leaveTrendChart').getContext('2d');
+        const leaveTrendChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'],
+                datasets: [
+                    {
+                        label: 'Cuti Sakit',
+                        data: [5, 12, 8, 15, 0, 0, 0, 0, 0, 0, 0, 0],
+                        backgroundColor: '#ef4444', // Rose/Red
+                        borderRadius: 4
+                    },
+                    {
+                        label: 'Cuti Tahunan',
+                        data: [20, 15, 25, 10, 0, 0, 0, 0, 0, 0, 0, 0],
+                        backgroundColor: '#10b981', // Emerald
+                        borderRadius: 4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { stacked: true, grid: { display: false } },
+                    y: { stacked: true, border: { dash: [4, 4] }, grid: { color: '#f3f4f6' } }
+                },
+                plugins: {
+                    legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
