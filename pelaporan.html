@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRIS Dashboard - Pusat Pelaporan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    </style>
+</head>
+<body class="bg-gray-50 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-white border-r border-gray-100 flex flex-col justify-between hidden md:flex h-full shrink-0">
+        <div class="p-6 overflow-y-auto custom-scrollbar">
+            <div class="flex items-center gap-2 mb-8 font-bold text-xl text-gray-800">
+                <div class="w-6 h-6 bg-emerald-500 rounded text-white flex items-center justify-center">H</div>
+                Portal HRIS
+            </div>
+            
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                
+                <a href="karyawan.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <span class="font-medium">Karyawan</span>
+                </a>
+
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>Kehadiran & Absensi</span>
+                </a>
+
+                <a href="manajemenCuti.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="font-medium">Manajemen Cuti</span>
+                </a>
+
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>Penggajian & BPJS</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>KPI & Penilaian</span>
+                </a>
+                <a href="pengumumanHr.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>Pengumuman HR</span>
+                </a>
+                
+                <a href="pelaporan.html" class="flex items-center gap-3 bg-emerald-50 text-emerald-600 px-4 py-3 rounded-xl transition shadow-sm mt-1">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="font-medium">Pelaporan</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-hidden bg-gray-50/50">
+        
+        <header class="h-[72px] bg-white flex items-center justify-between px-8 shrink-0 border-b border-gray-100">
+            <h2 class="font-semibold text-gray-800 text-lg">Pusat Pelaporan & Analitik</h2>
+            
+            <div class="flex items-center gap-8 text-sm font-medium text-gray-600">
+                <a href="#" class="hover:text-gray-900">Kebijakan HR</a>
+                <a href="#" class="hover:text-gray-900">Log Aktifitas</a>
+                
+                <div class="flex items-center gap-4 ml-4 border-l pl-6">
+                    <button class="relative text-gray-400 hover:text-gray-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <div class="flex items-center gap-3 cursor-pointer">
+                        <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
+                            <img src="https://i.pravatar.cc/150?img=47" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-6 md:p-8 custom-scrollbar">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-4 mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <p class="text-sm text-gray-500 font-medium">Karyawan Aktif</p>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">148 <span class="text-sm font-normal text-emerald-500 ml-2">↑ +3Bulan Ini</span></p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-4 mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <p class="text-sm text-gray-500 font-medium">Hari Cuti Diambil</p>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">24 <span class="text-sm font-normal text-gray-400 ml-2">Bulan Ini</span></p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-4 mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <p class="text-sm text-gray-500 font-medium">Est. Beban Gaji</p>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">Rp 1.2M <span class="text-sm font-normal text-gray-400 ml-2">Bulan Ini</span></p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-4 mb-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <p class="text-sm text-gray-500 font-medium">Kepesertaan BPJS</p>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">148 <span class="text-sm font-normal text-emerald-500 ml-2">100% Tercover</span></p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-8">
+                
+                <div class="xl:col-span-1 bg-white rounded-2xl border border-gray-100 shadow-sm flex flex-col overflow-hidden">
+                    <div class="p-6 border-b border-gray-100 bg-gray-50/50">
+                        <h3 class="font-bold text-gray-800 text-lg">Generator Laporan</h3>
+                        <p class="text-xs text-gray-500 mt-1">Buat dan unduh laporan khusus.</p>
+                    </div>
+                    
+                    <div class="p-6 space-y-5 flex-1">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Jenis Laporan <span class="text-rose-500">*</span></label>
+                            <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-700">
+                                <option>Rekap Data Demografi Karyawan</option>
+                                <option>Rekapitulasi Cuti Karyawan</option>
+                                <option>Laporan Detail Penggajian</option>
+                                <option>Daftar Kepesertaan BPJS (TK & Kesehatan)</option>
+                                <option>Laporan Kehadiran & Absensi</option>
+                            </select>
+                        </div>
+                        
+			<div>
+			    <label class="block text-sm font-semibold text-gray-700 mb-2">Periode Laporan</label>
+			    <div class="relative">
+				<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+				    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+				</div>
+				<input type="text" id="periodeLaporan" placeholder="Pilih rentang waktu (Misal: 01 Jan - 31 Mar)" class="w-full bg-gray-50 border border-gray-200 rounded-lg pl-10 pr-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-700 bg-white cursor-pointer" readonly>
+			    </div>
+			</div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Filter Departemen</label>
+                            <select class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-700">
+                                <option>Semua Departemen</option>
+                                <option>Finance & Accounting</option>
+                                <option>Human Resources (HR)</option>
+                                <option>IT & Engineering</option>
+                                <option>Sales & Marketing</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 border-t border-gray-100 flex gap-3">
+                        <button class="flex-1 bg-emerald-600 text-white rounded-xl py-2.5 text-sm font-semibold hover:bg-emerald-700 transition shadow-sm flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            Generate Excel
+                        </button>
+                        <button class="px-4 py-2.5 bg-[#111827] text-white rounded-xl text-sm font-semibold hover:bg-black transition shadow-sm flex items-center justify-center gap-2" title="Download PDF">
+                            PDF
+                        </button>
+                    </div>
+                </div>
+
+                <div class="xl:col-span-2 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm flex flex-col">
+                    <div class="flex justify-between items-center mb-6">
+                        <div>
+                            <h3 class="font-bold text-gray-800 text-lg">Tren Beban Gaji & Iuran BPJS</h3>
+                            <p class="text-xs text-gray-500 mt-1">Estimasi pengeluaran perusahaan Q1 - Q2 2026</p>
+                        </div>
+                        <button class="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-50 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        </button>
+                    </div>
+                    
+                    <div class="flex-1 min-h-[300px] w-full">
+                        <canvas id="financeTrendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+                <h3 class="font-bold text-gray-800 text-lg mb-6">Riwayat Unduhan Laporan Terbaru</h3>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-600 whitespace-nowrap">
+                        <thead class="text-xs text-gray-400 font-semibold border-b border-gray-100 bg-gray-50/50 uppercase tracking-wider">
+                            <tr>
+                                <th class="py-3 px-4">Nama Laporan</th>
+                                <th class="py-3 px-4">Periode Data</th>
+                                <th class="py-3 px-4">Departemen</th>
+                                <th class="py-3 px-4">Waktu Generate</th>
+                                <th class="py-3 px-4 text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-50">
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-4 px-4 font-semibold text-gray-800 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                    Rekap Data Demografi Karyawan
+                                </td>
+                                <td class="py-4 px-4 text-gray-600">Jan 2026 - Mar 2026</td>
+                                <td class="py-4 px-4">Semua Departemen</td>
+                                <td class="py-4 px-4 text-xs text-gray-400">Hari ini, 10:24 WIB</td>
+                                <td class="py-4 px-4 text-center">
+                                    <button class="text-emerald-600 hover:text-emerald-800 font-medium text-xs underline">Unduh Ulang (XLSX)</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-4 px-4 font-semibold text-gray-800 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                    Daftar Kepesertaan BPJS
+                                </td>
+                                <td class="py-4 px-4 text-gray-600">Feb 2026</td>
+                                <td class="py-4 px-4">Semua Departemen</td>
+                                <td class="py-4 px-4 text-xs text-gray-400">Kemarin, 15:30 WIB</td>
+                                <td class="py-4 px-4 text-center">
+                                    <button class="text-emerald-600 hover:text-emerald-800 font-medium text-xs underline">Unduh Ulang (PDF)</button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-4 px-4 font-semibold text-gray-800 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                    Rekapitulasi Cuti Karyawan
+                                </td>
+                                <td class="py-4 px-4 text-gray-600">Jan 2026 - Jan 2026</td>
+                                <td class="py-4 px-4">IT & Engineering</td>
+                                <td class="py-4 px-4 text-xs text-gray-400">12 Apr 2026, 09:15 WIB</td>
+                                <td class="py-4 px-4 text-center">
+                                    <button class="text-emerald-600 hover:text-emerald-800 font-medium text-xs underline">Unduh Ulang (XLSX)</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const ctx = document.getElementById('financeTrendChart').getContext('2d');
+        const financeTrendChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun'],
+                datasets: [
+                    {
+                        label: 'Total Beban Gaji (Miliar Rp)',
+                        data: [1.15, 1.18, 1.20, 1.25, 1.50, 1.25], // Lonjakan di Mei (misal THR)
+                        borderColor: '#10b981', // Emerald
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#10b981',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        fill: true,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Iuran BPJS Perusahaan (Ratus Juta Rp)',
+                        data: [0.85, 0.88, 0.90, 0.92, 0.95, 0.95],
+                        borderColor: '#8b5cf6', // Purple
+                        backgroundColor: 'transparent',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#fff',
+                        pointBorderColor: '#8b5cf6',
+                        pointBorderWidth: 2,
+                        pointRadius: 4,
+                        borderDash: [5, 5], // Garis putus-putus untuk membedakan
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { 
+                        beginAtZero: true,
+                        border: { dash: [4, 4] }, 
+                        grid: { color: '#f3f4f6' } 
+                    }
+                },
+                plugins: {
+                    legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8 } },
+                    tooltip: { mode: 'index', intersect: false }
+                },
+                interaction: { mode: 'nearest', axis: 'x', intersect: false }
+            }
+        });
+    </script>
+</body>
+</html>
+<script>
+    flatpickr("#periodeLaporan", {
+        mode: "range",
+        dateFormat: "Y-m-d", // Format data yang akan dikirim ke server/database
+        altInput: true,
+        altFormat: "d M Y",  // Format cantik yang dilihat oleh user (contoh: 01 Jan 2026)
+        placeholder: "Pilih tanggal mulai & akhir..."
+    });
+</script>
