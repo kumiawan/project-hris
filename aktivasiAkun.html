@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HRIS Dashboard - Manajemen Karyawan</title>
+    <title>HRIS Dashboard - Aktivasi Akun</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
         
-        /* Custom Scrollbar untuk tabel */
+        /* Custom Scrollbar */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        /* Toggle Checkbox Style untuk Akses Akun */
+        .toggle-checkbox:checked { right: 0; border-color: #10B981; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #10B981; }
+        .toggle-checkbox:disabled + .toggle-label { background-color: #e5e7eb; cursor: not-allowed; }
     </style>
 </head>
 <body class="bg-gray-50 h-screen flex overflow-hidden">
@@ -41,8 +46,8 @@
                     </button>
                     
                     <div class="ml-10 mt-1 space-y-1 text-sm">
-                        <a href="karyawan.html" class="block px-4 py-2 text-emerald-600 font-medium rounded-lg">Data Karyawan</a>
-                        <a href="aktivasiAkun.html" class="block px-4 py-2 text-gray-500 hover:text-gray-800 rounded-lg">Aktivasi Akun</a>
+                        <a href="karyawan.html" class="block px-4 py-2 text-gray-500 hover:text-gray-800 rounded-lg transition">Data Karyawan</a>
+                        <a href="aktivasiAkun.html" class="block px-4 py-2 text-emerald-600 font-medium rounded-lg bg-white">Aktivasi Akun</a>
                     </div>
                 </div>
 
@@ -50,7 +55,7 @@
                     <span>Kehadiran & Absensi</span>
                 </a>
                 <a href="manajemenCuti.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
-			    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <span class="font-medium">Manajemen Cuti</span>
                 </a>
                 <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
@@ -67,7 +72,6 @@
                 </a>
             </nav>
         </div>
-        
     </aside>
 
     <main class="flex-1 flex flex-col h-full overflow-hidden bg-white/50">
@@ -84,11 +88,10 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
                         <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
                     </button>
-                    <div class="flex items-center gap-2 cursor-pointer">
+                    <div class="flex items-center gap-3 cursor-pointer">
                         <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
                             <img src="https://i.pravatar.cc/150?img=47" alt="Profile" class="w-full h-full object-cover">
                         </div>
-                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                 </div>
             </div>
@@ -96,155 +99,160 @@
 
         <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
             
-            <div class="bg-white rounded-2xl border border-gray-100 p-6 min-h-full flex flex-col">
+            <div class="bg-white rounded-2xl border border-gray-100 p-6 min-h-full flex flex-col shadow-sm">
                 
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-800">Manajemen Karyawan</h1>
-                        <p class="text-gray-500 text-sm mt-1">Kelola data pribadi, jabatan, dan status akun karyawan</p>
+                        <h1 class="text-2xl font-bold text-gray-800">Aktivasi & Keamanan Akun</h1>
+                        <p class="text-gray-500 text-sm mt-1">Kelola kredensial login, hak akses portal, dan pengiriman tautan aktivasi karyawan.</p>
                     </div>
                     <div class="flex gap-3">
-                        <button class="px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            Unduh Laporan
-                        </button>
-                        <button class="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 flex items-center gap-2 shadow-sm">
-                            + Tambah Karyawan
+                        <button class="px-4 py-2.5 bg-[#111827] text-white rounded-lg text-sm font-medium hover:bg-black flex items-center gap-2 shadow-sm transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            Kirim Massal Email Aktivasi
                         </button>
                     </div>
                 </div>
 
                 <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
                     <div class="relative flex-1 min-w-[250px] max-w-md">
-                        <input type="text" placeholder="Cari nama atau NIK karyawan..." class="w-full bg-gray-50 border border-gray-100 rounded-lg pl-4 pr-10 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <input type="text" placeholder="Cari nama atau email karyawan..." class="w-full bg-gray-50 border border-gray-100 rounded-lg pl-4 pr-10 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                         <svg class="w-4 h-4 absolute right-4 top-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
                     
                     <div class="flex gap-3 relative">
-                        <button class="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-lg text-sm bg-white flex items-center justify-between gap-4 min-w-[140px]">
-                            Semua Divisi <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <button class="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-lg text-sm bg-white flex items-center justify-between gap-4 min-w-[140px]">
-                            Semua Jabatan <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
                         <div class="relative">
                             <button class="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-lg text-sm bg-white shadow-sm flex items-center justify-between gap-4 min-w-[140px]">
-                                Status Akun <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                Filter Status Kredensial <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <div class="overflow-x-auto flex-1">
+                <div class="overflow-x-auto flex-1 border border-gray-100 rounded-xl">
                     <table class="w-full text-left text-sm text-gray-600 whitespace-nowrap">
-                        <thead class="text-xs text-gray-500 font-semibold border-b border-gray-200 uppercase bg-gray-50/50">
+                        <thead class="text-xs text-gray-500 font-semibold border-b border-gray-200 uppercase bg-gray-50">
                             <tr>
-                                <th class="py-3 px-4 flex items-center gap-1 cursor-pointer">Nama Karyawan <span class="text-[10px]">↕</span></th>
-                                <th class="py-3 px-4">NIK</th>
-                                <th class="py-3 px-4">Jabatan</th>
-                                <th class="py-3 px-4">Divisi</th>
-                                <th class="py-3 px-4">Atasan Langsung</th>
-                                <th class="py-3 px-4">Status Akun</th>
-                                <th class="py-3 px-4 text-right">Aksi</th>
+                                <th class="py-3 px-4">Informasi Karyawan</th>
+                                <th class="py-3 px-4">Level Akses</th>
+                                <th class="py-3 px-4">Status Kredensial</th>
+                                <th class="py-3 px-4">Terakhir Login</th>
+                                <th class="py-3 px-4 text-center">Tindakan Khusus</th>
+                                <th class="py-3 px-4 text-center">Izin Akses</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             
-                            <tr class="hover:bg-gray-50 transition">
+                            <tr class="hover:bg-gray-50/50 transition">
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">AY</div>
+                                        <div>
+                                            <p class="font-medium text-gray-800">Ahmad Yani</p>
+                                            <p class="text-[11px] text-gray-400">ahmad.y@perusahaan.com</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-gray-700">Karyawan (User)</td>
+                                <td class="py-4 px-4">
+                                    <span class="inline-flex items-center px-2 py-1 rounded bg-yellow-50 text-yellow-600 text-[10px] font-bold uppercase tracking-wide">
+                                        ⏳ Menunggu Aktivasi
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4 text-gray-400 italic text-xs">Belum pernah</td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="px-3 py-1.5 bg-white border border-gray-200 hover:bg-gray-50 rounded-lg text-xs font-medium text-gray-600 shadow-sm flex items-center gap-1.5 transition">
+                                            <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                                            Kirim Ulang Link
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+                                        <input type="checkbox" id="toggle-rayna" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer transition-transform duration-200 ease-in-out"/>
+                                        <label for="toggle-rayna" class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer"></label>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50/50 transition">
                                 <td class="py-4 px-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-9 h-9 rounded-full bg-gray-200 overflow-hidden"><img src="https://i.pravatar.cc/150?img=1" class="w-full h-full object-cover"></div>
-                                        <div>
+					<div>
                                             <p class="font-medium text-gray-800">Pristia Candra</p>
-                                            <p class="text-xs text-gray-400">pristia@perusahaan.com</p>
+                                            <p class="text-[11px] text-gray-400">@perusahaan.com</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="py-4 px-4 font-mono text-xs">202301045</td>
-                                <td class="py-4 px-4">Staff Pemasaran</td>
-                                <td class="py-4 px-4">Marketing</td>
-                                <td class="py-4 px-4">Budi Santoso</td>
+                                <td class="py-4 px-4 text-gray-700">Manajer Divisi</td>
                                 <td class="py-4 px-4">
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-600 uppercase tracking-wide">● Aktif</span>
+                                    <span class="inline-flex items-center px-2 py-1 rounded bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-wide">
+                                        ✓ Terverifikasi
+                                    </span>
                                 </td>
-                                <td class="py-4 px-4 text-right">
-                                    <div class="flex justify-end gap-2 text-gray-400">
-                                        <span class="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center cursor-pointer hover:bg-gray-100" title="Opsi Lainnya">⋮</span>
-                                        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center cursor-pointer hover:bg-emerald-200" title="Edit Data">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                        </span>
+                                <td class="py-4 px-4 text-xs font-medium text-gray-600">Hari ini, 08:45 WIB</td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <button class="px-3 py-1.5 bg-white border border-gray-200 hover:bg-rose-50 hover:border-rose-200 hover:text-rose-600 rounded-lg text-xs font-medium text-gray-600 shadow-sm flex items-center gap-1.5 transition">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                                            Reset Sandi
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+                                        <input type="checkbox" id="toggle-rayna" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer transition-transform duration-200 ease-in-out"/>
+                                        <label for="toggle-rayna" class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer"></label>
                                     </div>
                                 </td>
                             </tr>
 
-                            <tr class="hover:bg-gray-50 transition">
-                                <td class="py-4 px-4">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-9 h-9 rounded-full bg-gray-200 overflow-hidden"><img src="https://i.pravatar.cc/150?img=5" class="w-full h-full object-cover"></div>
-                                        <div>
-                                            <p class="font-medium text-gray-800">Hanna Baptista</p>
-                                            <p class="text-xs text-gray-400">hanna@perusahaan.com</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-4 px-4 font-mono text-xs">202402112</td>
-                                <td class="py-4 px-4">Desainer Grafis</td>
-                                <td class="py-4 px-4">Kreatif</td>
-                                <td class="py-4 px-4">Andi Wijaya</td>
-                                <td class="py-4 px-4">
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple-50 text-purple-600 uppercase tracking-wide">● Percobaan</span>
-                                </td>
-                                <td class="py-4 px-4 text-right">
-                                    <div class="flex justify-end gap-2 text-gray-400">
-                                        <span class="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center cursor-pointer hover:bg-gray-100">⋮</span>
-                                        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center cursor-pointer hover:bg-emerald-200">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                        </span>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr class="hover:bg-gray-50 transition">
+                            <tr class="hover:bg-gray-50/50 transition">
                                 <td class="py-4 px-4">
                                     <div class="flex items-center gap-3">
                                         <div class="w-9 h-9 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center text-xs font-bold text-red-600 bg-red-100">RT</div>
                                         <div>
                                             <p class="font-medium text-gray-800">Rayna Torff</p>
-                                            <p class="text-xs text-gray-400">rayna@perusahaan.com</p>
+                                            <p class="text-[11px] text-gray-400">rayna@perusahaan.com</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="py-4 px-4 font-mono text-xs">202005088</td>
-                                <td class="py-4 px-4">Manajer Proyek</td>
-                                <td class="py-4 px-4">Operasional</td>
-                                <td class="py-4 px-4">Direktur Utama</td>
+                                <td class="py-4 px-4 text-gray-700">Karyawan (User)</td>
                                 <td class="py-4 px-4">
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-red-50 text-red-600 uppercase tracking-wide">● Cuti / Non-Aktif</span>
+                                    <span class="inline-flex items-center px-2 py-1 rounded bg-rose-50 text-rose-600 text-[10px] font-bold uppercase tracking-wide">
+                                        🔒 Ditangguhkan
+                                    </span>
                                 </td>
-                                <td class="py-4 px-4 text-right">
-                                    <div class="flex justify-end gap-2 text-gray-400">
-                                        <span class="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center cursor-pointer hover:bg-gray-100">⋮</span>
-                                        <span class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center cursor-pointer hover:bg-emerald-200">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                        </span>
+                                <td class="py-4 px-4 text-xs text-gray-500">12 Feb 2026</td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="flex items-center justify-center gap-2">
+                                        <span class="text-xs text-gray-400 italic">Cuti Panjang / Resign</span>
+                                    </div>
+                                </td>
+                                <td class="py-4 px-4 text-center">
+                                    <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+                                        <input type="checkbox" id="toggle-rayna" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer transition-transform duration-200 ease-in-out"/>
+                                        <label for="toggle-rayna" class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer"></label>
                                     </div>
                                 </td>
                             </tr>
+
                         </tbody>
                     </table>
                 </div>
 
-                <div class="flex items-center justify-between mt-6 pt-4 border-t border-gray-100">
-                    <span class="text-sm text-gray-500">Menampilkan 1 hingga 3 dari 45 Karyawan</span>
+                <div class="flex items-center justify-between mt-6 pt-4 border-t border-gray-100 shrink-0">
+                    <span class="text-sm text-gray-500">Menampilkan 1 hingga 3 dari 45 Akun</span>
                     <div class="flex items-center gap-1">
                         <button class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-400 hover:bg-gray-50">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                         </button>
                         <button class="w-8 h-8 flex items-center justify-center rounded border border-emerald-500 bg-emerald-50 text-emerald-700 font-medium">1</button>
                         <button class="w-8 h-8 flex items-center justify-center rounded border-transparent text-gray-500 hover:bg-gray-50">2</button>
-                        <button class="w-8 h-8 flex items-center justify-center rounded border-transparent text-gray-500 hover:bg-gray-50">3</button>
                         <span class="px-2 text-gray-400">...</span>
-                        <button class="w-8 h-8 flex items-center justify-center rounded border-transparent text-gray-500 hover:bg-gray-50">15</button>
+                        <button class="w-8 h-8 flex items-center justify-center rounded border-transparent text-gray-500 hover:bg-gray-50">5</button>
                         <button class="w-8 h-8 flex items-center justify-center rounded border border-gray-200 text-gray-600 hover:bg-gray-50">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </button>
