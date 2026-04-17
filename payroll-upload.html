@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRIS Dashboard - Upload Rincian Gaji</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        /* Animasi Progress Bar */
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+        .animate-progress { animation: progress 2s ease-in-out forwards; }
+    </style>
+</head>
+<body class="bg-gray-50 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-white border-r border-gray-100 flex flex-col justify-between hidden md:flex h-full shrink-0">
+        <div class="p-6 overflow-y-auto custom-scrollbar">
+            <div class="flex items-center gap-2 mb-8 font-bold text-xl text-gray-800">
+                <div class="w-6 h-6 bg-emerald-500 rounded text-white flex items-center justify-center">H</div>
+                Portal HRIS
+            </div>
+            
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition mb-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span class="font-medium">Dasbor Utama</span>
+                </a>
+                
+                <a href="karyawan.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <span class="font-medium">Karyawan</span>
+                </a>
+
+                <div>
+                    <button class="flex items-center justify-between w-full text-emerald-600 px-4 py-3 rounded-xl transition bg-emerald-50 shadow-sm">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <span class="font-medium">Penggajian & BPJS</span>
+                        </div>
+                        <svg class="w-4 h-4 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    
+                    <div class="ml-10 mt-1 space-y-1 text-sm">
+                        <a href="payroll-list.html" class="block px-4 py-2 text-emerald-600 font-medium rounded-lg">Data Penggajian</a>
+                        <a href="payroll-components.html" class="block px-4 py-2 text-gray-500 hover:text-gray-800 rounded-lg">Kamus Komponen</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-hidden bg-gray-50/50">
+        
+        <header class="h-[72px] bg-white flex items-center justify-between px-8 shrink-0 border-b border-gray-100">
+            <div class="relative w-96">
+                <svg class="w-4 h-4 absolute left-4 top-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <input type="text" placeholder="Cari data karyawan atau menu..." class="w-full bg-gray-50 border border-gray-100 rounded-full pl-10 pr-12 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+            
+            <div class="flex items-center gap-8 text-sm font-medium text-gray-600">
+                <div class="flex items-center gap-4 ml-4 border-l pl-6">
+                    <div class="flex items-center gap-2 cursor-pointer">
+                        <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
+                            <img src="https://i.pravatar.cc/150?img=47" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                        <span class="text-sm font-semibold text-gray-700 hidden md:block">Admin HRD</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+            
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <div class="flex items-center gap-2 text-sm text-gray-500 mb-2">
+                        <a href="payroll-list.html" class="hover:text-emerald-600 transition">Data Penggajian</a>
+                        <span>/</span>
+                        <span class="text-gray-800 font-medium">Upload Rincian</span>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-800">Upload Rincian Penggajian</h1>
+                </div>
+                <a href="payroll-list.html" class="px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 flex items-center gap-2 transition shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Kembali
+                </a>
+            </div>
+
+            <div class="w-full bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden flex flex-col">
+                
+                <div class="p-6 md:p-8 space-y-6 flex-1">
+                    
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-gray-700">Periode Penggajian <span class="text-red-500">*</span></label>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <select id="periodMonth" onchange="checkExistingData()" class="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-700 transition">
+                                <option disabled selected>Pilih Bulan</option>
+                                <option value="01">Januari</option>
+                                <option value="02">Februari</option>
+                                <option value="03">Maret</option>
+                                <option value="04">April</option>
+                            </select>
+                            
+                            <select id="periodYear" onchange="checkExistingData()" class="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-700 transition">
+                                <option value="2025">2025</option>
+                                <option value="2026" selected>2026</option>
+                            </select>
+                            
+                            <button class="flex-1 px-4 py-2.5 bg-white border border-emerald-500 text-emerald-600 rounded-lg text-sm font-medium hover:bg-emerald-50 flex items-center justify-center gap-2 transition shadow-sm group relative" title="Template otomatis dibuat berdasarkan Kamus Komponen">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                Unduh Template Excel
+                            </button>
+                        </div>
+                        
+                        <div id="alertDoubleUpload" class="hidden mt-3 bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start gap-3 transition-all duration-300">
+                            <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                            <div class="text-sm text-amber-800">
+                                <p class="font-semibold mb-0.5">Peringatan Overwrite Data</p>
+                                <p>Sistem mendeteksi bahwa data rincian gaji untuk periode ini sudah pernah diunggah. Mengunggah ulang akan menimpa (overwrite) data sebelumnya.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-gray-700">Log Catatan Revisi / Keterangan <span class="text-red-500">*</span></label>
+                        <input type="text" id="inputCatatan" placeholder="Contoh: Upload ulang karena ada koreksi lembur divisi Marketing" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">File Rincian Excel <span class="text-red-500">*</span></label>
+                        
+                        <div id="dropzoneArea" onclick="document.getElementById('fileInput').click()" class="border-2 border-dashed border-gray-300 bg-gray-50 rounded-xl p-12 flex flex-col items-center justify-center text-center hover:bg-emerald-50 hover:border-emerald-300 transition cursor-pointer group">
+                            <div class="w-14 h-14 bg-white border border-gray-200 rounded-full flex items-center justify-center text-emerald-600 mb-4 shadow-sm group-hover:scale-110 transition-transform">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                            </div>
+                            <h3 class="text-base font-semibold text-gray-800 mb-1">Klik untuk unggah atau seret file ke sini</h3>
+                            <p class="text-sm text-gray-500">Format yang didukung: XLS, XLSX (Template dari sistem)</p>
+                            
+                            <input type="file" id="fileInput" class="hidden" accept=".xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="simulateProcessing()" />
+                        </div>
+
+                        <div id="progressArea" class="hidden border border-gray-200 bg-white rounded-xl p-8 flex flex-col items-center justify-center text-center">
+                            <svg class="w-10 h-10 text-emerald-500 animate-spin mb-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            <h3 class="text-base font-semibold text-gray-800 mb-2">Membaca dan Memvalidasi Data Excel...</h3>
+                            <p class="text-sm text-gray-500 mb-4">Mengecek konsistensi NIK dan Kunci Pemetaan Kamus.</p>
+                            
+                            <div class="w-full max-w-md bg-gray-100 rounded-full h-2.5 overflow-hidden">
+                                <div class="bg-emerald-500 h-2.5 rounded-full animate-progress"></div>
+                            </div>
+                        </div>
+
+                        <div id="validationResultArea" class="hidden border border-gray-200 bg-white rounded-xl overflow-hidden">
+                            <div class="p-6 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-base font-bold text-gray-800">Pembacaan File Selesai</h3>
+                                        <p class="text-sm text-gray-500" id="fileNameDisplay">data_gaji_maret.xlsx</p>
+                                    </div>
+                                </div>
+                                <button onclick="resetUpload()" class="text-sm font-medium text-red-500 hover:text-red-700 transition">Batalkan & Ganti File</button>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div class="flex flex-col md:flex-row gap-6 mb-6">
+                                    <div class="flex-1 bg-emerald-50 border border-emerald-100 rounded-lg p-4">
+                                        <p class="text-sm text-emerald-700 font-medium mb-1">Baris Data Valid</p>
+                                        <p class="text-2xl font-bold text-emerald-800">142 <span class="text-sm font-normal">Karyawan</span></p>
+                                    </div>
+                                    <div class="flex-1 bg-red-50 border border-red-100 rounded-lg p-4">
+                                        <p class="text-sm text-red-700 font-medium mb-1">Peringatan: NIK Tidak Ditemukan</p>
+                                        <p class="text-2xl font-bold text-red-800">2 <span class="text-sm font-normal">Baris</span></p>
+                                    </div>
+                                </div>
+
+                                <div class="border border-red-200 rounded-lg overflow-hidden">
+                                    <table class="w-full text-left text-sm text-gray-600">
+                                        <thead class="bg-red-50 text-red-700 text-xs font-semibold">
+                                            <tr>
+                                                <th class="py-2 px-4 border-b border-red-100">Baris Excel</th>
+                                                <th class="py-2 px-4 border-b border-red-100">NIK Tertulis</th>
+                                                <th class="py-2 px-4 border-b border-red-100">Nama (Berdasarkan Excel)</th>
+                                                <th class="py-2 px-4 border-b border-red-100">Status Validasi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-red-100">
+                                            <tr>
+                                                <td class="py-2.5 px-4">Baris 45</td>
+                                                <td class="py-2.5 px-4 font-mono font-bold text-gray-800">20219901</td>
+                                                <td class="py-2.5 px-4">Budi Santoso</td>
+                                                <td class="py-2.5 px-4 text-red-600 font-medium">NIK tidak terdaftar di Database HRIS</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="py-2.5 px-4">Baris 102</td>
+                                                <td class="py-2.5 px-4 font-mono font-bold text-gray-800">20218802</td>
+                                                <td class="py-2.5 px-4">Siti Aminah</td>
+                                                <td class="py-2.5 px-4 text-red-600 font-medium">NIK tidak terdaftar di Database HRIS</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-3 italic">Peringatan: Baris data dengan NIK yang tidak ditemukan di atas akan <b>diabaikan (skip)</b> saat proses simpan ke database. Harap periksa kembali file Excel Anda atau tambahkan Karyawan tersebut di menu Karyawan.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-end gap-3 rounded-b-2xl">
+                    <a href="payroll-list.html" class="px-5 py-2.5 bg-white border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-100 transition">
+                        Batal
+                    </a>
+                    <button id="btnFinalSubmit" disabled class="px-6 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-sm transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Simpan ke Database
+                    </button>
+                </div>
+
+            </div>
+            
+        </div>
+    </main>
+
+    <script>
+        // Simulasi Validasi Periode (Mencegah Double Upload)
+        function checkExistingData() {
+            const month = document.getElementById('periodMonth').value;
+            const year = document.getElementById('periodYear').value;
+            const alertBox = document.getElementById('alertDoubleUpload');
+            
+            // Asumsikan Maret 2026 sudah ada datanya di sistem
+            if (month === "03" && year === "2026") {
+                alertBox.classList.remove('hidden');
+            } else {
+                alertBox.classList.add('hidden');
+            }
+        }
+
+        // Jalankan saat pertama kali load
+        window.onload = checkExistingData;
+
+        // Simulasi Alur Upload (Dropzone -> Progress -> Result)
+        function simulateProcessing() {
+            const fileInput = document.getElementById('fileInput');
+            if(fileInput.files.length === 0) return;
+
+            const fileName = fileInput.files[0].name;
+            document.getElementById('fileNameDisplay').innerText = fileName;
+
+            // Sembunyikan Dropzone, Tampilkan Progress Bar
+            document.getElementById('dropzoneArea').classList.add('hidden');
+            document.getElementById('progressArea').classList.remove('hidden');
+
+            // Simulasi proses delay 2 detik (Membaca file & validasi NIK API)
+            setTimeout(() => {
+                document.getElementById('progressArea').classList.add('hidden');
+                document.getElementById('validationResultArea').classList.remove('hidden');
+                
+                // Aktifkan tombol Submit Final
+                document.getElementById('btnFinalSubmit').disabled = false;
+            }, 2000);
+        }
+
+        function resetUpload() {
+            document.getElementById('fileInput').value = "";
+            document.getElementById('validationResultArea').classList.add('hidden');
+            document.getElementById('progressArea').classList.add('hidden');
+            document.getElementById('dropzoneArea').classList.remove('hidden');
+            document.getElementById('btnFinalSubmit').disabled = true;
+        }
+    </script>
+
+</body>
+</html>
