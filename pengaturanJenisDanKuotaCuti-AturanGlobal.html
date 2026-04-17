@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRIS Dashboard - Aturan Global Cuti</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Custom Scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        /* Toggle Checkbox Style */
+        .toggle-checkbox:checked { right: 0; border-color: #10B981; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #10B981; }
+    </style>
+</head>
+<body class="bg-gray-50 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-white border-r border-gray-100 flex flex-col justify-between hidden md:flex h-full shrink-0">
+        <div class="p-6 overflow-y-auto custom-scrollbar">
+            <div class="flex items-center gap-2 mb-8 font-bold text-xl text-gray-800">
+                <div class="w-6 h-6 bg-emerald-500 rounded text-white flex items-center justify-center">H</div>
+                Portal HRIS
+            </div>
+            
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                
+                <a href="karyawan.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <span class="font-medium">Karyawan</span>
+                </a>
+
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>Kehadiran & Absensi</span>
+                </a>
+
+                <div>
+                    <button class="flex items-center justify-between w-full text-emerald-600 px-4 py-3 rounded-xl transition">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span class="font-medium">Manajemen Cuti</span>
+                    </div>
+                    <svg class="w-4 h-4 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    
+                    <div class="ml-10 mt-1 space-y-1 text-sm">
+                        <a href="manajemenCuti.html" class="block px-4 py-2 text-gray-500 hover:text-gray-800 rounded-lg">Pengajuan Cuti</a>
+                        <a href="pengaturanJenisDanKuotaCuti.html" class="block px-4 py-2 bg-gray-50 text-gray-800 font-medium rounded-lg">Pengaturan Cuti</a>
+                        <a href="laporanCuti.html" class="block px-4 py-2 text-gray-500 hover:text-gray-800 rounded-lg">Laporan Cuti</a>
+                    </div>
+                </div>
+
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>Penggajian & BPJS</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>KPI & Penilaian</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>Pengumuman HR</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <span>Pelaporan (Report)</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-hidden bg-gray-50/50">
+        
+        <header class="h-[72px] bg-white flex flex-end items-center justify-between px-8 shrink-0 border-b border-gray-100">
+            <div class="text-lg font-semibold text-gray-800"></div>
+            
+            <div class="flex items-center gap-8 text-sm font-medium text-gray-600">
+                <a href="#" class="hover:text-gray-900">Kebijakan HR</a>
+                <a href="#" class="hover:text-gray-900">Log Aktifitas</a>
+                
+                <div class="flex items-center gap-4 ml-4 border-l pl-6">
+                    <button class="relative text-gray-400 hover:text-gray-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+                    <div class="flex items-center gap-2 cursor-pointer">
+                        <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
+                            <img src="https://i.pravatar.cc/150?img=47" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+            
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm min-h-full flex flex-col">
+                
+                <div class="px-8 border-b border-gray-100 pt-6 flex items-end gap-8 bg-white rounded-t-2xl shrink-0 z-10 sticky top-0">
+                    <a href="pengaturanJenisDanKuotaCuti.html" class="pb-4 border-b-2 border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300 font-medium text-sm flex items-center gap-2 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Jenis & Kuota
+                    </a>
+                    
+                    <a href="pengaturanjenisDanKuotaCuti-AturanGlobal.html" class="pb-4 border-b-2 border-emerald-500 text-emerald-600 font-medium text-sm flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                        Aturan Global
+                    </a>
+                </div>
+
+                <div class="p-8 flex-1 bg-gray-50/30 rounded-b-2xl">
+                    
+                    <div class="max-w-3xl space-y-6">
+                        
+                        <div class="mb-2">
+                            <h2 class="text-xl font-bold text-gray-800">Siklus & Masa Kerja</h2>
+                            <p class="text-sm text-gray-500 mt-1">Atur regulasi pemotongan cuti dan hak dasar operasional perusahaan.</p>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+                            <h3 class="text-base font-bold text-gray-800 mb-6 pb-2 border-b border-gray-100">Aturan Operasional</h3>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="pr-8">
+                                        <div class="text-sm font-semibold text-gray-800">Hitung Akhir Pekan (Weekend)</div>
+                                        <div class="text-xs text-gray-500 mt-1">Sabtu dan Minggu dihitung memotong jatah cuti jika masuk dalam rentang tanggal pengajuan.</div>
+                                    </div>
+                                    <div class="relative inline-block w-11 shrink-0 align-middle select-none">
+                                        <input type="checkbox" id="toggle1" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-transform duration-200 ease-in-out"/>
+                                        <label for="toggle1" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                                    </div>
+                                </div>
+
+                                <hr class="border-gray-50">
+
+                                <div class="flex items-center justify-between">
+                                    <div class="pr-8">
+                                        <div class="text-sm font-semibold text-gray-800">Sistem Prorata Karyawan Baru</div>
+                                        <div class="text-xs text-gray-500 mt-1">Hitung jatah cuti proporsional (1 hari/bulan) untuk karyawan pada tahun pertama kerja.</div>
+                                    </div>
+                                    <div class="relative inline-block w-11 shrink-0 align-middle select-none">
+                                        <input type="checkbox" id="toggle2" checked class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-transform duration-200 ease-in-out"/>
+                                        <label for="toggle2" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                                    </div>
+                                </div>
+
+                                <hr class="border-gray-50">
+
+                                <div class="flex items-center justify-between">
+                                    <div class="pr-8">
+                                        <div class="text-sm font-semibold text-gray-800">Sisa Cuti Hangus (No Carry-Forward)</div>
+                                        <div class="text-xs text-gray-500 mt-1">Sisa jatah cuti tahun sebelumnya tidak bisa digunakan atau diakumulasikan di tahun berikutnya.</div>
+                                    </div>
+                                    <div class="relative inline-block w-11 shrink-0 align-middle select-none">
+                                        <input type="checkbox" id="toggle3" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-transform duration-200 ease-in-out"/>
+                                        <label for="toggle3" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 pt-6 border-t border-gray-100 flex justify-end">
+                                <button class="px-5 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition shadow-sm">
+                                    Simpan Perubahan
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+</body>
+</html>
