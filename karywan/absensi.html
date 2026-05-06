@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRIS Karyawan - Absensi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+    </style>
+</head>
+<body class="bg-gray-50 h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-white border-r border-gray-100 flex flex-col justify-between hidden md:flex h-full shrink-0">
+        <div class="p-6 overflow-y-auto custom-scrollbar">
+            <div class="flex items-center gap-2 mb-8 font-bold text-xl text-gray-800">
+                <div class="w-6 h-6 bg-emerald-500 rounded text-white flex items-center justify-center">H</div>
+                Portal HRIS
+            </div>
+
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition mb-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+
+                <a href="profil.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span class="font-medium">Profil Saya</span>
+                </a>
+
+                <a href="cuti.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span class="font-medium">Cuti</span>
+                </a>
+
+                <a href="absensi.html" class="flex items-center gap-3 bg-emerald-50 text-emerald-600 px-4 py-3 rounded-xl shadow-sm transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2M5 12a7 7 0 1114 0 7 7 0 01-14 0z"></path></svg>
+                    <span class="font-medium">Absensi</span>
+                </a>
+
+                <a href="payroll.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="font-medium">Payroll & BPJS</span>
+                </a>
+
+                <a href="dokumen.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h10M7 11h10M7 15h6M5 3h9l5 5v13a1 1 0 01-1 1H5a1 1 0 01-1-1V4a1 1 0 011-1z"></path></svg>
+                    <span class="font-medium">Dokumen & Surat</span>
+                </a>
+
+                <a href="pengumuman.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+                    <span class="font-medium">Pengumuman HR</span>
+                </a>
+
+                <a href="pengaturan-akun.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8a4 4 0 100 8 4 4 0 000-8zm8 4a8 8 0 11-16 0 8 8 0 0116 0z"></path></svg>
+                    <span class="font-medium">Pengaturan Akun</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-hidden">
+        <header class="h-[72px] bg-white flex items-center justify-between px-8 border-b border-gray-100 shrink-0">
+            <div class="text-sm font-medium text-gray-500">Rekap Kehadiran</div>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
+                        <img src="https://i.pravatar.cc/150?img=32" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-sm font-semibold text-gray-700">Sinta Ramadina</span>
+                </div>
+                <a href="../shared/login.html" class="text-sm text-gray-500 hover:text-gray-800">Logout</a>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                    <p class="text-sm text-gray-500">Status Hari Ini</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">Masuk</p>
+                    <p class="text-xs text-gray-400 mt-1">08:47 WIB</p>
+                </div>
+                <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                    <p class="text-sm text-gray-500">Total Kehadiran</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">21 Hari</p>
+                    <p class="text-xs text-gray-400 mt-1">April 2025</p>
+                </div>
+                <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                    <p class="text-sm text-gray-500">Keterlambatan</p>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">2 Hari</p>
+                    <p class="text-xs text-gray-400 mt-1">Bulan ini</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h1 class="text-lg font-bold text-gray-800">Riwayat Absensi</h1>
+                    <button class="px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Unduh Rekap</button>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr class="text-left text-gray-500 border-b">
+                                <th class="py-2">Tanggal</th>
+                                <th>Masuk</th>
+                                <th>Pulang</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-gray-700">
+                            <tr class="border-b">
+                                <td class="py-3">02 Mei 2025</td>
+                                <td>08:42</td>
+                                <td>17:35</td>
+                                <td><span class="px-2 py-1 text-xs bg-emerald-50 text-emerald-600 rounded-full">Tepat Waktu</span></td>
+                            </tr>
+                            <tr class="border-b">
+                                <td class="py-3">01 Mei 2025</td>
+                                <td>09:15</td>
+                                <td>17:20</td>
+                                <td><span class="px-2 py-1 text-xs bg-amber-50 text-amber-600 rounded-full">Terlambat</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-3">30 Apr 2025</td>
+                                <td>08:50</td>
+                                <td>17:40</td>
+                                <td><span class="px-2 py-1 text-xs bg-emerald-50 text-emerald-600 rounded-full">Tepat Waktu</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
