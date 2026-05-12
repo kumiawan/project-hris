@@ -12,6 +12,32 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+        /* Konfigurasi Cetak / Ekspor PDF */
+        @media print {
+            /* Sembunyikan elemen navigasi dan tombol saat diekspor */
+            aside, header, button { display: none !important; }
+            body, main, .overflow-y-auto { 
+                overflow: visible !important; 
+                height: auto !important; 
+                background-color: white !important; 
+            }
+            .p-8 { padding: 0 !important; }
+            .shadow-sm { box-shadow: none !important; border: 1px solid #e5e7eb !important; }
+            .grid { display: block !important; } /* Ubah grid menjadi block agar rapi di kertas */
+            .mb-6 { margin-bottom: 24px !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+            /* Logika isolasi area yang dicetak berdasarkan class di body */
+            body.print-slip #section-bpjs, 
+            body.print-slip #section-riwayat { display: none !important; }
+            
+            body.print-bpjs #section-slip, 
+            body.print-bpjs #section-riwayat { display: none !important; }
+            
+            body.print-riwayat #section-slip, 
+            body.print-riwayat #section-bpjs { display: none !important; }
+        }
     </style>
 </head>
 <body class="bg-gray-50 h-screen flex overflow-hidden">
@@ -28,37 +54,34 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                     <span class="font-medium">Dashboard</span>
                 </a>
-
                 <a href="profil.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                     <span class="font-medium">Profil Saya</span>
                 </a>
-
                 <a href="cuti.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     <span class="font-medium">Cuti</span>
                 </a>
-
                 <a href="absensi.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2M5 12a7 7 0 1114 0 7 7 0 01-14 0z"></path></svg>
                     <span class="font-medium">Absensi</span>
                 </a>
-
+                <a href="kpi.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    <span class="font-medium">Nilai KPI</span>
+                </a>
                 <a href="payroll.html" class="flex items-center gap-3 bg-emerald-50 text-emerald-600 px-4 py-3 rounded-xl shadow-sm transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     <span class="font-medium">Payroll & BPJS</span>
                 </a>
-
                 <a href="dokumen.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h10M7 11h10M7 15h6M5 3h9l5 5v13a1 1 0 01-1 1H5a1 1 0 01-1-1V4a1 1 0 011-1z"></path></svg>
                     <span class="font-medium">Dokumen & Surat</span>
                 </a>
-
                 <a href="pengumuman.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
                     <span class="font-medium">Pengumuman HR</span>
                 </a>
-
                 <a href="pengaturan-akun.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8a4 4 0 100 8 4 4 0 000-8zm8 4a8 8 0 11-16 0 8 8 0 0116 0z"></path></svg>
                     <span class="font-medium">Pengaturan Akun</span>
@@ -83,71 +106,101 @@
 
         <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                <div class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-                    <div class="flex items-center justify-between">
+                
+                <!-- Section Slip Gaji -->
+                <div id="section-slip" class="lg:col-span-2 bg-white rounded-2xl border border-gray-100 p-6 shadow-sm mb-6 lg:mb-0">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
                             <h1 class="text-xl font-bold text-gray-800">Slip Gaji Terbaru</h1>
-                            <p class="text-sm text-gray-500 mt-1">Periode Maret 2025</p>
+                            <p class="text-sm text-gray-500 mt-1">Periode Maret 2026</p>
                         </div>
-                        <button class="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">Unduh PDF</button>
+                        <button onclick="unduhSebagaiPDF('slip')" class="flex items-center justify-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            Unduh Slip
+                        </button>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                        <div class="p-4 bg-gray-50 rounded-xl">
-                            <p class="text-xs text-gray-500">Gaji Pokok</p>
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <p class="text-xs text-gray-500 font-medium">Gaji Pokok</p>
                             <p class="text-lg font-bold text-gray-800 mt-1">Rp 6.500.000</p>
                         </div>
-                        <div class="p-4 bg-gray-50 rounded-xl">
-                            <p class="text-xs text-gray-500">Tunjangan</p>
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <p class="text-xs text-gray-500 font-medium">Tunjangan</p>
                             <p class="text-lg font-bold text-gray-800 mt-1">Rp 1.750.000</p>
                         </div>
-                        <div class="p-4 bg-gray-50 rounded-xl">
-                            <p class="text-xs text-gray-500">Potongan</p>
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100">
+                            <p class="text-xs text-gray-500 font-medium">Potongan</p>
                             <p class="text-lg font-bold text-gray-800 mt-1">Rp 0</p>
                         </div>
                     </div>
+                    <!-- Tambahan Total untuk PDF -->
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
+                        <span class="font-semibold text-gray-600">Take Home Pay</span>
+                        <span class="text-xl font-bold text-emerald-600">Rp 8.250.000</span>
+                    </div>
                 </div>
 
-                <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-                    <h2 class="text-sm font-semibold text-gray-700 mb-4">Informasi BPJS</h2>
-                    <div class="space-y-3 text-sm text-gray-600">
-                        <p>BPJS Kesehatan: <span class="font-semibold text-gray-800">0001122334455</span></p>
-                        <p>BPJS TK: <span class="font-semibold text-gray-800">8899001122</span></p>
-                        <p>Status: <span class="text-emerald-600 font-semibold">Aktif</span></p>
+                <!-- Section BPJS -->
+                <div id="section-bpjs" class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm h-fit">
+                    <h2 class="text-sm font-bold text-gray-800 mb-4">Informasi BPJS</h2>
+                    <div class="space-y-3 text-sm text-gray-600 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                        <div class="flex justify-between border-b border-gray-200 pb-2">
+                            <span>Kesehatan</span>
+                            <span class="font-semibold text-gray-800">0001122334455</span>
+                        </div>
+                        <div class="flex justify-between border-b border-gray-200 pb-2">
+                            <span>Ketenagakerjaan</span>
+                            <span class="font-semibold text-gray-800">8899001122</span>
+                        </div>
+                        <div class="flex justify-between pt-1">
+                            <span>Status Kepesertaan</span>
+                            <span class="text-emerald-600 font-bold">Aktif</span>
+                        </div>
                     </div>
-                    <button class="mt-5 px-4 py-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50">Detail BPJS</button>
+                    <button onclick="unduhSebagaiPDF('bpjs')" class="w-full mt-5 flex items-center justify-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Unduh Detail BPJS
+                    </button>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
-                <h2 class="text-lg font-bold text-gray-800 mb-4">Riwayat Slip Gaji</h2>
+            <!-- Section Riwayat Gaji -->
+            <div id="section-riwayat" class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4">
+                    <h2 class="text-lg font-bold text-gray-800">Riwayat Slip Gaji</h2>
+                    <button onclick="unduhSebagaiPDF('riwayat')" class="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
+                        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Unduh Rekap
+                    </button>
+                </div>
                 <div class="overflow-x-auto">
                     <table class="min-w-full text-sm">
                         <thead>
-                            <tr class="text-left text-gray-500 border-b">
-                                <th class="py-2">Periode</th>
-                                <th>Take Home Pay</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
+                            <tr class="text-left text-gray-500 border-b border-gray-200">
+                                <th class="py-3 px-2 font-medium">Periode</th>
+                                <th class="font-medium">Take Home Pay</th>
+                                <th class="font-medium">Status Publikasi</th>
+                                <th class="font-medium text-right px-2">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="text-gray-700">
-                            <tr class="border-b">
-                                <td class="py-3">Maret 2025</td>
-                                <td>Rp 8.250.000</td>
-                                <td><span class="px-2 py-1 text-xs bg-emerald-50 text-emerald-600 rounded-full">Terbit</span></td>
-                                <td><button class="text-emerald-600 hover:underline text-sm">Unduh</button></td>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                                <td class="py-4 px-2">Maret 2026</td>
+                                <td class="font-semibold text-gray-800">Rp 8.250.000</td>
+                                <td><span class="px-2.5 py-1 text-xs bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100 font-medium">Diterbitkan</span></td>
+                                <td class="text-right px-2"><button onclick="unduhSebagaiPDF('slip')" class="text-emerald-600 font-medium hover:text-emerald-800">Unduh PDF</button></td>
                             </tr>
-                            <tr class="border-b">
-                                <td class="py-3">Februari 2025</td>
-                                <td>Rp 8.100.000</td>
-                                <td><span class="px-2 py-1 text-xs bg-emerald-50 text-emerald-600 rounded-full">Terbit</span></td>
-                                <td><button class="text-emerald-600 hover:underline text-sm">Unduh</button></td>
+                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition">
+                                <td class="py-4 px-2">Februari 2026</td>
+                                <td class="font-semibold text-gray-800">Rp 8.100.000</td>
+                                <td><span class="px-2.5 py-1 text-xs bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100 font-medium">Diterbitkan</span></td>
+                                <td class="text-right px-2"><button onclick="unduhSebagaiPDF('slip')" class="text-emerald-600 font-medium hover:text-emerald-800">Unduh PDF</button></td>
                             </tr>
-                            <tr>
-                                <td class="py-3">Januari 2025</td>
-                                <td>Rp 8.050.000</td>
-                                <td><span class="px-2 py-1 text-xs bg-emerald-50 text-emerald-600 rounded-full">Terbit</span></td>
-                                <td><button class="text-emerald-600 hover:underline text-sm">Unduh</button></td>
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-4 px-2">Januari 2026</td>
+                                <td class="font-semibold text-gray-800">Rp 8.050.000</td>
+                                <td><span class="px-2.5 py-1 text-xs bg-amber-50 text-amber-600 rounded-full border border-amber-100 font-medium">Menunggu Validasi</span></td>
+                                <td class="text-right px-2"><button class="text-gray-400 font-medium cursor-not-allowed" disabled>Belum Tersedia</button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -155,5 +208,21 @@
             </div>
         </div>
     </main>
+
+    <!-- Script Logika Cetak PDF -->
+    <script>
+        function unduhSebagaiPDF(areaId) {
+            // Menambahkan class ke body agar CSS mengetahui bagian mana yang sedang difokuskan untuk dicetak
+            document.body.classList.add('print-' + areaId);
+            
+            // Memanggil dialog print browser (karyawan bisa memilih destinasi "Save as PDF")
+            window.print();
+            
+            // Menghapus class setelah dialog ditutup, mengembalikan tampilan ke normal
+            setTimeout(() => {
+                document.body.classList.remove('print-' + areaId);
+            }, 500);
+        }
+    </script>
 </body>
 </html>

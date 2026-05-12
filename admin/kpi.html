@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HRIS Dashboard - Manajemen KPI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+        body {
+            font-family: "Inter", sans-serif;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 h-screen flex overflow-hidden relative">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-100 flex flex-col justify-between hidden md:flex h-full shrink-0">
+        <div class="p-6 overflow-y-auto custom-scrollbar">
+            <div class="flex items-center gap-2 mb-8 font-bold text-xl text-gray-800">
+                <div class="w-6 h-6 bg-emerald-500 rounded text-white flex items-center justify-center">H</div>
+                Portal HRIS
+            </div>
+            
+            <nav class="space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                
+                <a href="karyawan.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <span class="font-medium">Karyawan</span>
+                </a>
+
+                <a href="absensi.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span class="font-medium">Absensi</span>
+                </a>
+
+                <a href="manajemenCuti.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+			    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="font-medium">Manajemen Cuti</span>
+                </a>
+
+                <a href="kpi.html"
+                    class="flex items-center gap-3 text-emerald-600 bg-emerald-50 shadow-sm px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Nilai KPI</span>
+                </a>
+
+                <a href="payroll-list.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span class="font-medium">Payroll & BPJS</span>
+                </a>
+
+                <a href="pengumumanHr.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+                    <span class="font-medium">Pengumuman HR</span>
+                </a>
+                <a href="pelaporan.html" class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="font-medium">Pelaporan</span>
+                </a>
+            </nav>
+        </div>
+        
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-hidden bg-gray-50/50">
+        <!-- Header -->
+        <header class="h-[72px] bg-white flex items-center justify-between px-8 shrink-0 border-b border-gray-100">
+            <div class="relative w-96">
+                <!-- Spacing -->
+            </div>
+
+            <div class="flex items-center gap-8 text-sm font-medium text-gray-600">
+                <div class="flex items-center gap-4 ml-4 border-l pl-6">
+                    <div class="flex items-center gap-2 cursor-pointer">
+                        <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
+                            <img src="https://i.pravatar.cc/150?img=47" alt="Profile"
+                                class="w-full h-full object-cover" />
+                        </div>
+                        <span class="text-sm font-semibold text-gray-700 hidden md:block">Admin HRD</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+            <!-- Cards Summary KPI -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-medium text-gray-500">Periode Aktif</h3>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">
+                        Q1 - 2026
+                        <span class="text-sm font-normal text-gray-400">Jan-Mar</span>
+                    </p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-500 flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-medium text-gray-500">
+                            Karyawan Dinilai
+                        </h3>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">
+                        145
+                        <span class="text-sm font-normal text-gray-400">dari 150 Staff</span>
+                    </p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-500 flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-medium text-gray-500">Rata-rata Skor</h3>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">
+                        82.4 <span class="text-sm font-normal text-gray-400">/ 100</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Main Content Container -->
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm min-h-[500px] flex flex-col">
+                <div class="mb-6 flex flex-col gap-5">
+                    <!-- Baris Atas: Judul & Tombol Aksi Sejajar Kanan -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800">
+                                Manajemen Data KPI
+                            </h2>
+                            <p class="text-gray-500 text-sm mt-1">
+                                Kelola dan unggah skor evaluasi kinerja karyawan secara
+                                massal.
+                            </p>
+                        </div>
+
+                        <!-- Tombol Import Excel -->
+                        <button onclick="openImportPanel()"
+                            class="w-full sm:w-auto shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition flex items-center justify-center gap-2 shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                            </svg>
+                            Import Excel KPI
+                        </button>
+                    </div>
+
+                    <!-- Baris Bawah: Search Bar & Filter -->
+                    <div class="flex flex-col sm:flex-row gap-3 w-full">
+                        <div class="relative w-full sm:w-72">
+                            <input type="text" placeholder="Cari nama atau NIK karyawan..."
+                                class="w-full bg-gray-50 border border-gray-100 rounded-lg pl-4 pr-10 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                            <svg class="w-4 h-4 absolute right-4 top-3.5 text-gray-400" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <select
+                            class="w-full sm:w-48 bg-gray-50 border border-gray-100 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-600">
+                            <option value="">Semua Departemen</option>
+                            <option value="IT">IT & Development</option>
+                            <option value="HR">Human Resources</option>
+                            <option value="Finance">Finance</option>
+                        </select>
+                        <select
+                            class="w-full sm:w-48 bg-gray-50 border border-gray-100 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-600">
+                            <option value="Q1-2026">Periode Q1-2026</option>
+                            <option value="Q4-2025">Periode Q4-2025</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tabel Data KPI -->
+                <div class="overflow-x-auto flex-1">
+                    <table class="w-full text-left text-sm text-gray-600 whitespace-nowrap">
+                        <thead
+                            class="text-xs text-gray-500 font-semibold border-b border-gray-200 uppercase bg-gray-50/50">
+                            <tr>
+                                <th class="py-3 px-4">Nama & NIK</th>
+                                <th class="py-3 px-4">Departemen</th>
+                                <th class="py-3 px-4">Periode</th>
+                                <th class="py-3 px-4 text-center">Skor Akhir</th>
+                                <th class="py-3 px-4">Predikat</th>
+                                <th class="py-3 px-4">Status</th>
+                                <th class="py-3 px-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100" id="kpiTableBody">
+                            <!-- Contoh satu baris (row) pada tabel -->
+                            <tr class="hover:bg-gray-50 transition duration-200" id="row-kpi-1">
+                                <td class="py-4 px-4">
+                                    <p class="font-medium text-gray-800">Sinta Ramadina</p>
+                                    <p class="text-xs text-gray-500 font-mono mt-0.5">
+                                        NIK: 20260401
+                                    </p>
+                                </td>
+                                <td class="py-4 px-4 text-gray-600">IT & Development</td>
+                                <td class="py-4 px-4 font-medium">Q1 - 2026</td>
+                                <td class="py-4 px-4 text-center">
+                                    <span
+                                        class="inline-flex items-center justify-center font-bold text-emerald-600 text-base">88.50</span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-600">Sangat
+                                        Baik</span>
+                                </td>
+
+                                <!-- FITUR: Toggle Status -->
+                                <!-- Ubah pada td status di setiap baris tabel -->
+                                <td class="py-4 px-4">
+                                    <button onclick="openConfirmStatusModal(this)"
+                                        class="status-btn inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full transition-all duration-200 bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 status-dot"></span>
+                                        <span class="status-text">Terpublikasi</span>
+                                    </button>
+                                </td>
+
+                                <td class="py-4 px-4 text-right">
+                                    <div class="flex justify-end gap-2 text-gray-400">
+                                        <!-- FITUR: Ikon Mata (Detail) -->
+                                        <button onclick="
+                          openDetailModal(
+                            'Sinta Ramadina',
+                            '20260401',
+                            88.5,
+                            'Sangat Baik',
+                          )
+                        " class="w-8 h-8 inline-flex items-center justify-center rounded-lg bg-gray-50 text-gray-600 hover:bg-emerald-50 hover:text-emerald-600 transition shadow-sm border border-gray-100">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                        <button
+                                            class="w-8 h-8 inline-flex items-center justify-center rounded-lg bg-red-50 text-red-500 hover:bg-red-100 transition shadow-sm border border-red-100">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50 transition duration-200">
+                                <td class="py-4 px-4">
+                                    <p class="font-medium text-gray-800">Ahmad Faisal</p>
+                                    <p class="text-xs text-gray-500 font-mono mt-0.5">
+                                        NIK: 20260402
+                                    </p>
+                                </td>
+                                <td class="py-4 px-4 text-gray-600">Finance</td>
+                                <td class="py-4 px-4 font-medium">Q1 - 2026</td>
+                                <td class="py-4 px-4 text-center">
+                                    <span
+                                        class="inline-flex items-center justify-center font-bold text-gray-800 text-base">75.00</span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold bg-blue-50 text-blue-600">Baik</span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5 13l4 4L19 7"></path>
+                                        </svg>
+                                        Terpublikasi
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4 text-right">
+                                    <div class="flex justify-end gap-2 text-gray-400">
+                                        <button
+                                            class="w-8 h-8 inline-flex items-center justify-center rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-200 transition"
+                                            title="Lihat Detail">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                        <button
+                                            class="w-8 h-8 inline-flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition"
+                                            title="Hapus Data">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50 transition duration-200">
+                                <td class="py-4 px-4">
+                                    <p class="font-medium text-gray-800">Diana Putri</p>
+                                    <p class="text-xs text-gray-500 font-mono mt-0.5">
+                                        NIK: 20260405
+                                    </p>
+                                </td>
+                                <td class="py-4 px-4 text-gray-600">Human Resources</td>
+                                <td class="py-4 px-4 font-medium">Q1 - 2026</td>
+                                <td class="py-4 px-4 text-center">
+                                    <span
+                                        class="inline-flex items-center justify-center font-bold text-amber-600 text-base">55.25</span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-600">Cukup</span>
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span class="inline-flex items-center gap-1.5 text-xs font-medium text-gray-400">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        Draft / Belum Rilis
+                                    </span>
+                                </td>
+                                <td class="py-4 px-4 text-right">
+                                    <div class="flex justify-end gap-2 text-gray-400">
+                                        <button
+                                            class="w-8 h-8 inline-flex items-center justify-center rounded-lg bg-gray-50 text-gray-600 hover:bg-gray-200 transition"
+                                            title="Lihat Detail">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                        <button
+                                            class="w-8 h-8 inline-flex items-center justify-center rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition"
+                                            title="Hapus Data">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Overlay Panel Upload -->
+    <div id="slideOverOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-30 z-40 hidden transition-opacity"
+        onclick="closeImportPanel()"></div>
+
+    <!-- Slide-Over Panel Upload Excel -->
+    <div id="importSlideOver"
+        class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+            <div>
+                <h2 class="text-lg font-bold text-gray-800">Import Penilaian KPI</h2>
+                <p class="text-sm text-gray-500 mt-1">
+                    Unggah file Excel (.xlsx/.xls) massal.
+                </p>
+            </div>
+            <button onclick="closeImportPanel()"
+                class="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6 custom-scrollbar space-y-6">
+            <!-- Panduan Template -->
+            <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl">
+                <div class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h4 class="text-sm font-semibold text-blue-800">
+                            Gunakan Template Standar
+                        </h4>
+                        <p class="text-xs text-blue-600 mt-1 mb-2">
+                            Pastikan struktur kolom Excel Anda (NIK, Nama, Kriteria A,
+                            Kriteria B, Ulasan Manajer) sesuai dengan template sistem.
+                        </p>
+                        <a href="#"
+                            class="inline-flex items-center gap-1.5 text-xs font-medium text-blue-700 hover:text-blue-900 underline">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download Template Excel
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pilih Periode -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Periode Evaluasi <span
+                        class="text-red-500">*</span></label>
+                <select id="inputPeriode"
+                    class="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                    <option value="" disabled selected>Pilih Kuartal / Tahun</option>
+                    <option value="Q1-2026">Q1 - 2026 (Januari - Maret)</option>
+                    <option value="Q2-2026">Q2 - 2026 (April - Juni)</option>
+                    <option value="Q4-2025">Q4 - 2025 (Oktober - Desember)</option>
+                </select>
+            </div>
+
+            <!-- Area Upload File -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Upload File Excel <span
+                        class="text-red-500">*</span></label>
+
+                <div class="relative mt-1 flex justify-center px-6 pt-8 pb-8 border-2 border-gray-300 border-dashed rounded-xl hover:border-emerald-500 hover:bg-emerald-50/30 transition cursor-pointer group"
+                    onclick="document.getElementById('file-upload').click()">
+                    <div class="space-y-2 text-center">
+                        <svg class="mx-auto h-10 w-10 text-gray-400 group-hover:text-emerald-500 transition"
+                            stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                            <path
+                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="flex text-sm text-gray-600 justify-center">
+                            <span
+                                class="relative cursor-pointer bg-transparent rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none">
+                                <span>Pilih file</span>
+                                <input id="file-upload" name="file-upload" type="file" class="sr-only"
+                                    accept=".xlsx, .xls, .csv" onchange="showFileName(this)" />
+                            </span>
+                            <p class="pl-1">atau drag and drop</p>
+                        </div>
+                        <p class="text-xs text-gray-500">XLSX, XLS up to 10MB</p>
+                    </div>
+                </div>
+
+                <!-- Notifikasi File Terpilih (Disembunyikan default) -->
+                <div id="file-info"
+                    class="hidden mt-3 p-3 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-between">
+                    <div class="flex items-center gap-2 overflow-hidden">
+                        <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span id="file-name" class="text-sm font-medium text-gray-700 truncate">data_kpi.xlsx</span>
+                    </div>
+                    <button onclick="resetFile(event)" class="text-red-500 hover:text-red-700 shrink-0 ml-2 p-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Opsi Publikasi -->
+            <div class="flex items-start">
+                <div class="flex items-center h-5">
+                    <input id="publish_now" type="checkbox"
+                        class="w-4 h-4 text-emerald-600 bg-gray-100 border-gray-300 rounded focus:ring-emerald-500" />
+                </div>
+                <div class="ml-3 text-sm">
+                    <label for="publish_now" class="font-medium text-gray-700 cursor-pointer">Langsung
+                        Publikasikan</label>
+                    <p class="text-gray-500 text-xs mt-0.5">
+                        Jika dicentang, karyawan bisa langsung melihat hasil di portal
+                        mereka. Jika tidak, akan tersimpan sebagai draft.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-gray-100 bg-white flex gap-3">
+            <button onclick="closeImportPanel()"
+                class="flex-1 py-2.5 border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
+                Batal
+            </button>
+            <button
+                class="flex-1 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 shadow-sm transition flex items-center justify-center gap-2">
+                Proses Import Data
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Detail KPI -->
+    <div id="detailModal"
+        class="fixed inset-0 z-[60] hidden bg-gray-900/60 backdrop-blur-sm items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden transform transition-all">
+            <!-- Header Modal -->
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+                <div>
+                    <h3 class="text-lg font-bold text-gray-800">Rincian Hasil KPI</h3>
+                    <p class="text-xs text-gray-500" id="detailEmpInfo">
+                        Sinta Ramadina | NIK: 20260401
+                    </p>
+                </div>
+                <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600 p-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Body Modal -->
+            <div class="p-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="p-4 bg-emerald-50 rounded-xl border border-emerald-100 text-center">
+                        <p class="text-xs text-emerald-600 font-semibold uppercase tracking-wider">
+                            Skor Akhir
+                        </p>
+                        <p class="text-4xl font-black text-emerald-700 mt-1" id="detailScore">
+                            88.50
+                        </p>
+                    </div>
+                    <div
+                        class="p-4 bg-blue-50 rounded-xl border border-blue-100 text-center flex flex-col justify-center">
+                        <p class="text-xs text-blue-600 font-semibold uppercase tracking-wider">
+                            Predikat
+                        </p>
+                        <p class="text-xl font-bold text-blue-700 mt-1" id="detailPredicate">
+                            Sangat Baik
+                        </p>
+                    </div>
+                </div>
+
+                <h4 class="text-sm font-bold text-gray-800 mb-3 italic">
+                    "Ulasan Manajer"
+                </h4>
+                <div
+                    class="p-4 bg-gray-50 border border-gray-200 rounded-xl text-sm text-gray-600 leading-relaxed mb-6">
+                    Kinerja sangat stabil, terutama dalam penyelesaian modul backend
+                    tepat waktu. Disiplin sangat baik. Perlu ditingkatkan dalam aspek
+                    inisiatif desain UI.
+                </div>
+
+                <!-- Ringkasan Indikator (Statis/Contoh) -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-gray-500">Kedisiplinan & Kehadiran (20%)</span>
+                        <span class="font-bold text-gray-800">100/100</span>
+                    </div>
+                    <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-emerald-500 h-full w-full"></div>
+                    </div>
+
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="text-gray-500">Kualitas Kode (40%)</span>
+                        <span class="font-bold text-gray-800">90/100</span>
+                    </div>
+                    <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-emerald-500 h-full w-[90%]"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Modal -->
+            <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/50 flex justify-end">
+                <button onclick="closeDetailModal()"
+                    class="px-5 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition shadow-sm">
+                    Tutup Rincian
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Status -->
+    <div id="confirmStatusModal"
+        class="fixed inset-0 z-[70] hidden bg-gray-900/60 backdrop-blur-sm items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden transform transition-all scale-95 opacity-0"
+            id="confirmStatusContent">
+            <div class="p-6 text-center">
+                <!-- Icon Peringatan -->
+                <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                        </path>
+                    </svg>
+                </div>
+
+                <h3 class="text-lg font-bold text-gray-800 mb-2">
+                    Ubah Status Publikasi?
+                </h3>
+                <p class="text-sm text-gray-500 mb-6">
+                    Apakah Anda yakin ingin mengubah status data ini? Jika diubah
+                    menjadi Terpublikasi, karyawan akan langsung dapat melihat nilainya.
+                </p>
+
+                <div class="flex gap-3">
+                    <button onclick="closeConfirmStatusModal()"
+                        class="flex-1 py-2.5 border border-gray-200 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-50 transition">
+                        Batal
+                    </button>
+                    <button onclick="executeStatusToggle()"
+                        class="flex-1 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 transition shadow-sm">
+                        Ya, Ubah
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script UI Logic -->
+    <script>
+        function openImportPanel() {
+            document.getElementById("slideOverOverlay").classList.remove("hidden");
+            setTimeout(() => {
+                document
+                    .getElementById("importSlideOver")
+                    .classList.remove("translate-x-full");
+            }, 10);
+        }
+
+        function closeImportPanel() {
+            document
+                .getElementById("importSlideOver")
+                .classList.add("translate-x-full");
+            setTimeout(() => {
+                document.getElementById("slideOverOverlay").classList.add("hidden");
+            }, 300);
+        }
+
+        function showFileName(input) {
+            const fileInfo = document.getElementById("file-info");
+            const fileNameDisplay = document.getElementById("file-name");
+
+            if (input.files && input.files[0]) {
+                fileNameDisplay.textContent = input.files[0].name;
+                fileInfo.classList.remove("hidden");
+            }
+        }
+
+        function resetFile(event) {
+            event.stopPropagation(); // Mencegah memicu klik pada kotak drag-and-drop
+            const input = document.getElementById("file-upload");
+            const fileInfo = document.getElementById("file-info");
+
+            input.value = ""; // Bersihkan input file
+            fileInfo.classList.add("hidden");
+        }
+        // --- Fungsi Toggle Status (Draft / Published) ---
+        // --- Logika Konfirmasi Ubah Status ---
+        let pendingStatusButton = null;
+
+        function openConfirmStatusModal(btn) {
+            // Simpan referensi tombol yang diklik
+            pendingStatusButton = btn;
+
+            const modal = document.getElementById("confirmStatusModal");
+            const content = document.getElementById("confirmStatusContent");
+
+            // Tampilkan modal dengan efek animasi transisi
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+
+            // Delay sedikit untuk memicu transisi opacity & scale Tailwind
+            setTimeout(() => {
+                content.classList.remove("scale-95", "opacity-0");
+                content.classList.add("scale-100", "opacity-100");
+            }, 10);
+        }
+
+        function closeConfirmStatusModal() {
+            const modal = document.getElementById("confirmStatusModal");
+            const content = document.getElementById("confirmStatusContent");
+
+            // Animasi keluar
+            content.classList.remove("scale-100", "opacity-100");
+            content.classList.add("scale-95", "opacity-0");
+
+            setTimeout(() => {
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+                pendingStatusButton = null; // Reset referensi
+            }, 200); // Sesuaikan dengan durasi animasi tailwind
+        }
+
+        function executeStatusToggle() {
+            if (!pendingStatusButton) return;
+
+            const btn = pendingStatusButton;
+            const dot = btn.querySelector(".status-dot");
+            const text = btn.querySelector(".status-text");
+            const isPublished = text.innerText === "Terpublikasi";
+
+            if (isPublished) {
+                // Eksekusi ubah ke Draft
+                btn.classList.remove(
+                    "bg-emerald-50",
+                    "text-emerald-600",
+                    "border-emerald-100",
+                    "hover:bg-emerald-100",
+                );
+                btn.classList.add(
+                    "bg-gray-100",
+                    "text-gray-500",
+                    "border-gray-200",
+                    "hover:bg-gray-200",
+                );
+                dot.classList.remove("bg-emerald-500");
+                dot.classList.add("bg-gray-400");
+                text.innerText = "Draft / Arsip";
+            } else {
+                // Eksekusi ubah ke Terpublikasi
+                btn.classList.add(
+                    "bg-emerald-50",
+                    "text-emerald-600",
+                    "border-emerald-100",
+                    "hover:bg-emerald-100",
+                );
+                btn.classList.remove(
+                    "bg-gray-100",
+                    "text-gray-500",
+                    "border-gray-200",
+                    "hover:bg-gray-200",
+                );
+                dot.classList.add("bg-emerald-500");
+                dot.classList.remove("bg-gray-400");
+                text.innerText = "Terpublikasi";
+            }
+
+            // Tutup modal setelah berhasil mengeksekusi perubahan
+            closeConfirmStatusModal();
+        }
+
+        // --- Fungsi Modal Detail ---
+        function openDetailModal(name, nik, score, predicate) {
+            const modal = document.getElementById("detailModal");
+
+            // Set data ke dalam modal
+            document.getElementById("detailEmpInfo").innerText =
+                `${name} | NIK: ${nik}`;
+            document.getElementById("detailScore").innerText = score.toFixed(2);
+            document.getElementById("detailPredicate").innerText = predicate;
+
+            // Tampilkan modal
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeDetailModal() {
+            const modal = document.getElementById("detailModal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+    </script>
+</body>
+
+</html>
