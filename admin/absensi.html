@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HRIS Dashboard - Rekap Absensi (Fingerprint)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+        body {
+            font-family: "Inter", sans-serif;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 h-screen flex overflow-hidden relative">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-100 flex flex-col justify-between hidden md:flex h-full shrink-0">
+        <div class="p-6 overflow-y-auto custom-scrollbar">
+            <div class="flex items-center gap-2 mb-8 font-bold text-xl text-gray-800">
+                <div class="w-6 h-6 bg-emerald-500 rounded text-white flex items-center justify-center">
+                    H
+                </div>
+                Portal HRIS
+            </div>
+
+            <nav class="space-y-1">
+                <a href="dashboard.html"
+                    class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition mb-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+
+                <a href="karyawan.html"
+                    class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Karyawan</span>
+                </a>
+
+                <!-- Menu Absensi (Active) -->
+                <a href="absensi.html"
+                    class="flex items-center gap-3 text-emerald-600 bg-emerald-50 shadow-sm px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="font-medium">Absensi</span>
+                </a>
+
+                <a href="manajemenCuti.html"
+                    class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Manajemen Cuti</span>
+                </a>
+
+                <a href="kpi.html"
+                    class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Nilai KPI</span>
+                </a>
+
+                <a href="payroll-list.html"
+                    class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Payroll & BPJS</span>
+                </a>
+
+                <a href="pengumumanHr.html"
+                    class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Pengumuman HR</span>
+                </a>
+                <a href="pelaporan.html"
+                    class="flex items-center gap-3 text-gray-500 hover:text-gray-800 px-4 py-3 rounded-xl transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                    <span class="font-medium">Pelaporan</span>
+                </a>
+            </nav>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-full overflow-hidden bg-gray-50/50">
+        <!-- Header -->
+        <header class="h-[72px] bg-white flex items-center justify-between px-8 shrink-0 border-b border-gray-100">
+            <div class="relative w-96">
+                <!-- Spacing -->
+            </div>
+
+            <div class="flex items-center gap-8 text-sm font-medium text-gray-600">
+                <div class="flex items-center gap-4 ml-4 border-l pl-6">
+                    <div class="flex items-center gap-2 cursor-pointer">
+                        <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
+                            <img src="https://i.pravatar.cc/150?img=47" alt="Profile"
+                                class="w-full h-full object-cover" />
+                        </div>
+                        <span class="text-sm font-semibold text-gray-700 hidden md:block">Admin HRD</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+            <!-- Cards Summary Absensi -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-medium text-gray-500">
+                            Hadir Tepat Waktu
+                        </h3>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">
+                        128
+                        <span class="text-sm font-normal text-gray-400">Karyawan</span>
+                    </p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-500 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-medium text-gray-500">Terlambat Masuk</h3>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">
+                        12 <span class="text-sm font-normal text-gray-400">Karyawan</span>
+                    </p>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                    <div class="flex items-center gap-3 mb-2">
+                        <div class="w-8 h-8 rounded-lg bg-red-50 text-red-500 flex items-center justify-center">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-sm font-medium text-gray-500">Alpha / Mangkir</h3>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800">
+                        5 <span class="text-sm font-normal text-gray-400">Karyawan</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Main Content Container -->
+            <div class="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm min-h-[500px] flex flex-col">
+                <div class="mb-6 flex flex-col gap-5">
+                    <!-- Baris Atas: Judul & Tombol Aksi Sejajar Kanan -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800">
+                                Log Kehadiran Harian
+                            </h2>
+                            <p class="text-gray-500 text-sm mt-1">
+                                Kelola dan sinkronisasi data dari mesin absensi / Fingerprint.
+                            </p>
+                        </div>
+
+                        <!-- Tombol Import Excel -->
+                        <button onclick="openImportPanel()"
+                            class="w-full sm:w-auto shrink-0 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition flex items-center justify-center gap-2 shadow-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                            </svg>
+                            Import Data Mesin
+                        </button>
+                    </div>
+
+                    <!-- Baris Bawah: Search Bar & Filter -->
+                    <div class="flex flex-col sm:flex-row gap-3 w-full">
+                        <div class="relative w-full sm:w-72">
+                            <input type="text" placeholder="Cari NIK atau Nama Karyawan..."
+                                class="w-full bg-gray-50 border border-gray-100 rounded-lg pl-4 pr-10 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                            <svg class="w-4 h-4 absolute right-4 top-3.5 text-gray-400" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                        <input type="date"
+                            class="w-full sm:w-48 bg-gray-50 border border-gray-100 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-600" />
+                        <select
+                            class="w-full sm:w-48 bg-gray-50 border border-gray-100 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 text-gray-600">
+                            <option value="">Semua Status</option>
+                            <option value="Hadir">Hadir</option>
+                            <option value="Terlambat">Terlambat</option>
+                            <option value="Alpha">Alpha</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Tabel Data Absensi -->
+                <div class="overflow-x-auto flex-1">
+                    <table class="w-full text-left text-sm text-gray-600 whitespace-nowrap">
+                        <thead
+                            class="text-xs text-gray-500 font-semibold border-b border-gray-200 uppercase bg-gray-50/50">
+                            <tr>
+                                <th class="py-3 px-4">Tanggal</th>
+                                <th class="py-3 px-4">Karyawan</th>
+                                <th class="py-3 px-4">Shift</th>
+                                <th class="py-3 px-4 text-center">Jam Masuk</th>
+                                <th class="py-3 px-4 text-center">Jam Pulang</th>
+                                <th class="py-3 px-4">Status</th>
+                                <th class="py-3 px-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100" id="attendanceTableBody">
+                            <tr class="hover:bg-gray-50 transition duration-200">
+                                <td class="py-4 px-4 font-medium text-gray-800">
+                                    12 Mei 2026
+                                </td>
+                                <td class="py-4 px-4">
+                                    <p class="font-medium text-gray-800">Sinta Ramadina</p>
+                                    <p class="text-xs text-gray-500 font-mono mt-0.5">
+                                        20260401
+                                    </p>
+                                </td>
+                                <td class="py-4 px-4 text-gray-600">
+                                    Reguler (08:00 - 17:00)
+                                </td>
+                                <td class="py-4 px-4 text-center font-mono font-medium text-emerald-600">
+                                    07:45
+                                </td>
+                                <td class="py-4 px-4 text-center font-mono font-medium text-emerald-600">
+                                    17:10
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold bg-emerald-50 text-emerald-600">Hadir</span>
+                                </td>
+                                <td class="py-4 px-4 text-right">
+                                    <button onclick="
+                        openEditLogModal(
+                          'Sinta Ramadina',
+                          '20260401',
+                          '12 Mei 2026',
+                          '07:45',
+                          '17:10',
+                          'Hadir',
+                        )
+                      " class="text-emerald-600 hover:underline text-sm font-medium">
+                                        Edit Log
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50 transition duration-200">
+                                <td class="py-4 px-4 font-medium text-gray-800">
+                                    12 Mei 2026
+                                </td>
+                                <td class="py-4 px-4">
+                                    <p class="font-medium text-gray-800">Ahmad Faisal</p>
+                                    <p class="text-xs text-gray-500 font-mono mt-0.5">
+                                        20260402
+                                    </p>
+                                </td>
+                                <td class="py-4 px-4 text-gray-600">
+                                    Reguler (08:00 - 17:00)
+                                </td>
+                                <td class="py-4 px-4 text-center font-mono font-medium text-amber-600">
+                                    08:25
+                                </td>
+                                <td class="py-4 px-4 text-center font-mono font-medium text-emerald-600">
+                                    17:05
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold bg-amber-50 text-amber-600">Terlambat</span>
+                                </td>
+                                <td class="py-4 px-4 text-right">
+                                    <button class="text-emerald-600 hover:underline text-sm font-medium">
+                                        Edit Log
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr class="hover:bg-gray-50 transition duration-200 bg-red-50/20">
+                                <td class="py-4 px-4 font-medium text-gray-800">
+                                    12 Mei 2026
+                                </td>
+                                <td class="py-4 px-4">
+                                    <p class="font-medium text-gray-800">Budi Santoso</p>
+                                    <p class="text-xs text-gray-500 font-mono mt-0.5">
+                                        20260403
+                                    </p>
+                                </td>
+                                <td class="py-4 px-4 text-gray-600">
+                                    Reguler (08:00 - 17:00)
+                                </td>
+                                <td class="py-4 px-4 text-center font-mono text-gray-400">
+                                    --:--
+                                </td>
+                                <td class="py-4 px-4 text-center font-mono text-gray-400">
+                                    --:--
+                                </td>
+                                <td class="py-4 px-4">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-1 rounded-md text-[11px] font-bold bg-red-50 text-red-500">Alpha</span>
+                                </td>
+                                <td class="py-4 px-4 text-right">
+                                    <button class="text-emerald-600 hover:underline text-sm font-medium">
+                                        Edit Log
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Overlay Panel Upload -->
+    <div id="slideOverOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-30 z-40 hidden transition-opacity"
+        onclick="closeImportPanel()"></div>
+
+    <!-- Slide-Over Panel Import Excel/CSV -->
+    <div id="importSlideOver"
+        class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+            <div>
+                <h2 class="text-lg font-bold text-gray-800">Import Log Mesin</h2>
+                <p class="text-sm text-gray-500 mt-1">
+                    Unggah raw data dari mesin Fingerprint.
+                </p>
+            </div>
+            <button onclick="closeImportPanel()"
+                class="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6 custom-scrollbar space-y-6">
+            <!-- Panduan Format -->
+            <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl">
+                <div class="flex items-start gap-3">
+                    <svg class="w-5 h-5 text-blue-600 shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h4 class="text-sm font-semibold text-blue-800">
+                            Informasi Format Kolom
+                        </h4>
+                        <p class="text-xs text-blue-600 mt-1 mb-2">
+                            Pastikan kolom file Anda sesuai dengan format standar:
+                            <b>Device ID, NIK, Tanggal (YYYY-MM-DD), Jam Scan, Mode
+                                (In/Out)</b>.
+                        </p>
+                        <a href="#"
+                            class="inline-flex items-center gap-1.5 text-xs font-medium text-blue-700 hover:text-blue-900 underline">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                            </svg>
+                            Download Format Standar
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pilih Tipe Mesin (Mapping) -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Merek / Tipe Mesin Fingerprint
+                    <span class="text-red-500">*</span></label>
+                <select
+                    class="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition">
+                    <option value="standard">Standard HRIS Format</option>
+                    <option value="solution">Solution (Export Format)</option>
+                    <option value="kana">Kana (Export Format)</option>
+                </select>
+                <p class="text-xs text-gray-400 mt-1">
+                    Sistem akan menyesuaikan cara membaca kolom berdasarkan merek mesin.
+                </p>
+            </div>
+
+            <!-- Area Upload File -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Upload File Excel / CSV <span
+                        class="text-red-500">*</span></label>
+
+                <div class="relative mt-1 flex justify-center px-6 pt-8 pb-8 border-2 border-gray-300 border-dashed rounded-xl hover:border-emerald-500 hover:bg-emerald-50/30 transition cursor-pointer group"
+                    onclick="document.getElementById('file-upload').click()">
+                    <div class="space-y-2 text-center">
+                        <svg class="mx-auto h-10 w-10 text-gray-400 group-hover:text-emerald-500 transition"
+                            stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                            <path
+                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div class="flex text-sm text-gray-600 justify-center">
+                            <span
+                                class="relative cursor-pointer bg-transparent rounded-md font-medium text-emerald-600 hover:text-emerald-500 focus-within:outline-none">
+                                <span>Pilih file data</span>
+                                <input id="file-upload" name="file-upload" type="file" class="sr-only"
+                                    accept=".xlsx, .xls, .csv" onchange="showFileName(this)" />
+                            </span>
+                            <p class="pl-1">atau drag and drop</p>
+                        </div>
+                        <p class="text-xs text-gray-500">XLSX, XLS, CSV up to 10MB</p>
+                    </div>
+                </div>
+
+                <!-- Notifikasi File Terpilih (Disembunyikan default) -->
+                <div id="file-info"
+                    class="hidden mt-3 p-3 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-between">
+                    <div class="flex items-center gap-2 overflow-hidden">
+                        <svg class="w-5 h-5 text-emerald-500 shrink-0" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span id="file-name" class="text-sm font-medium text-gray-700 truncate">attlog_2026.csv</span>
+                    </div>
+                    <button onclick="resetFile(event)" class="text-red-500 hover:text-red-700 shrink-0 ml-2 p-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6 border-t border-gray-100 bg-white flex gap-3">
+            <button onclick="closeImportPanel()"
+                class="flex-1 py-2.5 border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
+                Batal
+            </button>
+            <button
+                class="flex-1 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 shadow-sm transition flex items-center justify-center gap-2">
+                Sinkronisasi Data
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal Edit Log Absensi -->
+<div id="editLogModal" class="fixed inset-0 z-[60] hidden bg-gray-900/60 backdrop-blur-sm items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden transform transition-all scale-95 opacity-0" id="editLogContent">
+        
+        <!-- Header Modal -->
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+            <div>
+                <h3 class="text-lg font-bold text-gray-800">Koreksi Log Kehadiran</h3>
+                <p class="text-xs text-gray-500 mt-0.5">Edit manual data absensi dari mesin.</p>
+            </div>
+            <button onclick="closeEditLogModal()" class="text-gray-400 hover:text-gray-600 p-2 rounded-lg hover:bg-gray-100 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+
+        <!-- Body Modal -->
+        <div class="p-6 overflow-y-auto custom-scrollbar max-h-[70vh]">
+            
+            <!-- Info Karyawan (Read-Only) -->
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4 mb-6 flex items-start gap-3">
+                <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-gray-800" id="editEmpName">Sinta Ramadina</h4>
+                    <p class="text-xs text-gray-500 mt-0.5 font-mono" id="editEmpNIK">NIK: 20260401</p>
+                    <div class="mt-2 inline-flex items-center gap-1.5 px-2 py-1 bg-white border border-blue-100 rounded text-xs font-medium text-blue-700 shadow-sm">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        <span id="editEmpDate">12 Mei 2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Koreksi -->
+            <form id="formEditLog" class="space-y-5">
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Jam Masuk</label>
+                        <input type="time" id="inputTimeIn" class="w-full bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Jam Pulang</label>
+                        <input type="time" id="inputTimeOut" class="w-full bg-white border border-gray-200 rounded-lg px-4 py-2 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-mono">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Update Status Kehadiran</label>
+                    <select id="inputStatus" class="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="Hadir">Hadir</option>
+                        <option value="Terlambat">Terlambat</option>
+                        <option value="Alpha">Alpha / Mangkir</option>
+                        <option value="Dinas Luar">Dinas Luar</option>
+                        <option value="Cuti">Cuti</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Alasan Perubahan <span class="text-red-500">*</span></label>
+                    <textarea id="inputReason" rows="3" class="w-full bg-white border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="Contoh: Lupa absen pulang, sudah dikonfirmasi atasan..."></textarea>
+                    <p class="text-xs text-amber-600 font-medium mt-1">Wajib diisi sebagai jejak audit sistem.</p>
+                </div>
+            </form>
+            
+        </div>
+
+        <!-- Footer Modal -->
+        <div class="px-6 py-4 border-t border-gray-100 bg-gray-50/50 flex justify-end gap-3">
+            <button onclick="closeEditLogModal()" class="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-50 transition">
+                Batal
+            </button>
+            <button onclick="saveLogChanges()" class="px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition shadow-sm flex items-center gap-2">
+                Simpan Perubahan
+            </button>
+        </div>
+    </div>
+</div>
+
+    <!-- Script UI Logic -->
+    <script>
+        function openImportPanel() {
+            document.getElementById("slideOverOverlay").classList.remove("hidden");
+            setTimeout(() => {
+                document
+                    .getElementById("importSlideOver")
+                    .classList.remove("translate-x-full");
+            }, 10);
+        }
+
+        function closeImportPanel() {
+            document
+                .getElementById("importSlideOver")
+                .classList.add("translate-x-full");
+            setTimeout(() => {
+                document.getElementById("slideOverOverlay").classList.add("hidden");
+            }, 300);
+        }
+
+        function showFileName(input) {
+            const fileInfo = document.getElementById("file-info");
+            const fileNameDisplay = document.getElementById("file-name");
+
+            if (input.files && input.files[0]) {
+                fileNameDisplay.textContent = input.files[0].name;
+                fileInfo.classList.remove("hidden");
+            }
+        }
+
+        function resetFile(event) {
+            event.stopPropagation(); // Mencegah klik parent box terpicu
+            const input = document.getElementById("file-upload");
+            const fileInfo = document.getElementById("file-info");
+
+            input.value = "";
+            fileInfo.classList.add("hidden");
+        }
+
+        // --- Fungsi Modal Edit Log Kehadiran ---
+function openEditLogModal(name, nik, date, timeIn, timeOut, status) {
+    const modal = document.getElementById('editLogModal');
+    const content = document.getElementById('editLogContent');
+    
+    // Set data ke dalam form modal
+    document.getElementById('editEmpName').innerText = name;
+    document.getElementById('editEmpNIK').innerText = `NIK: ${nik}`;
+    document.getElementById('editEmpDate').innerText = date;
+    
+    // Set Value Form
+    document.getElementById('inputTimeIn').value = timeIn || '';
+    document.getElementById('inputTimeOut').value = timeOut || '';
+    document.getElementById('inputStatus').value = status;
+    document.getElementById('inputReason').value = ''; // Kosongkan alasan sebelumnya
+    document.getElementById('inputReason').classList.remove('border-red-500'); // Reset styling error
+
+    // Tampilkan modal dengan efek transisi
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    setTimeout(() => {
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+    }, 10);
+}
+
+function closeEditLogModal() {
+    const modal = document.getElementById('editLogModal');
+    const content = document.getElementById('editLogContent');
+    
+    // Animasi keluar
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }, 200); 
+}
+
+function saveLogChanges() {
+    const reason = document.getElementById('inputReason');
+    
+    // Validasi Audit Trail (Wajib isi alasan)
+    if (reason.value.trim() === '') {
+        reason.classList.add('border-red-500');
+        reason.focus();
+        alert('Gagal: Alasan perubahan wajib diisi untuk keperluan Audit Trail!');
+        return;
+    }
+    
+    // Di sini nantinya Anda memasukkan kode AJAX/Fetch untuk mengirim data ke backend
+    // Contoh: fetch('/api/attendance/update', { method: 'POST', body: ... })
+    
+    // Simulasi sukses
+    alert('Data absensi berhasil diperbarui.');
+    closeEditLogModal();
+}
+    </script>
+</body>
+
+</html>
